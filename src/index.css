@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Angela Barhouch — brand theme (Tailwind v4 CSS-first config)
+   Tokens here become utilities: bg-forest, text-sage, font-display,
+   ease-soft, shadow-float, animate-rise, rounded-blob …
+   Palette + type derived from the primary logo.
+   ============================================================ */
+@theme {
+  /* Surfaces — pale sage greens, a calmer cousin of cream */
+  --color-paper: #eef3e8;
+  --color-paper-2: #e6eedd;
+  --color-cream: #fbfaf3;
+  --color-card: #ffffff;
+
+  /* Greens from the logo */
+  --color-forest: #2e4636;
+  --color-forest-deep: #1f3327;
+  --color-sage: #6f9e72;
+  --color-sage-ink: #4e7355;
+  --color-mint: #b7d3ac;
+  --color-mint-soft: #d8e7ce;
+
+  /* Playful, calming accents (one per audience) */
+  --color-honey: #e7ad57;
+  --color-honey-ink: #43320e;
+  --color-sky: #82b2c4;
+  --color-blush: #e0a08f;
+
+  --color-tint-kids: #faedd6;
+  --color-tint-teens: #dcebf0;
+  --color-tint-adults: #dcebd6;
+  --color-tint-parents: #f6e2db;
+
+  /* Text */
+  --color-ink: #243a2c;
+  --color-ink-soft: #4c5f51;
+  --color-ink-mute: #748075;
+  --color-on-dark: #eaf2e3;
+  --color-on-dark-soft: #b9cdb3;
+
+  /* Type */
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-body: "Mulish", "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Motion */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Depth — green-tinted shadows */
+  --shadow-soft: 0 2px 10px rgba(46, 70, 54, 0.06);
+  --shadow-float: 0 16px 40px -18px rgba(46, 70, 54, 0.28);
+  --shadow-deep: 0 40px 90px -40px rgba(46, 70, 54, 0.45);
+
+  /* Extra radii on top of Tailwind's scale */
+  --radius-blob: 2.75rem;
+
+  /* Animations */
+  --animate-rise: rise 0.9s var(--ease-soft) forwards;
+  --animate-fade-up: fade-up 0.9s var(--ease-soft) forwards;
+  --animate-scroll-x: scroll-x 38s linear infinite;
+  --animate-wheel: wheel 1.6s var(--ease-soft) infinite;
+  --animate-float-slow: float-slow 7s ease-in-out infinite;
+}
+
+@keyframes rise {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes scroll-x {
+  to { transform: translateX(-50%); }
+}
+@keyframes wheel {
+  0% { opacity: 0; transform: translate(-50%, 0); }
+  40% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, 10px); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ---------------------------- Base ------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: var(--font-body);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+    text-wrap: balance;
+    color: var(--color-forest);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-sage-ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--color-mint);
+    color: var(--color-forest-deep);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* -------- Component classes: only the genuinely complex motion ---- */
+@layer components {
+  /* Film grain to take the digital edge off flat fills */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  /* Hero headline: each line masks & rises in. The padding/negative-margin
+     pair keeps the vertical mask while giving italic overhang room so wide
+     words (e.g. "conversation") never get their last glyph clipped. */
+  .reveal-line {
+    display: block;
+    overflow: hidden;
+    padding-right: 0.14em;
+    margin-right: -0.14em;
+  }
+  .reveal-line > span {
+    display: block;
+    transform: translateY(110%);
+    animation: var(--animate-rise);
+  }
+
+  /* Scroll-into-view reveal (driven by IntersectionObserver) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.8s var(--ease-soft),
+      transform 0.8s var(--ease-soft);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal-line > span,
+    [data-anim] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
