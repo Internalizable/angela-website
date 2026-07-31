@@ -3,10 +3,10 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 /* og:image must be an absolute URL — WhatsApp and friends won't resolve a
-   relative one. angelabarhouch.com is the canonical host, so it wins over
-   Vercel's per-deploy domain (which would otherwise point previews and any
-   *.vercel.app alias at the wrong origin). Set SITE_URL to override. */
-const SITE_URL = (process.env.SITE_URL || 'https://angelabarhouch.com').replace(/\/+$/, '')
+   relative one, and crawlers are unreliable about following redirects for it.
+   The apex 308-redirects to www, so www is the host that actually answers 200
+   and the one every absolute URL here must use. Set SITE_URL to override. */
+const SITE_URL = (process.env.SITE_URL || 'https://www.angelabarhouch.com').replace(/\/+$/, '')
 
 // https://vite.dev/config/
 export default defineConfig({
