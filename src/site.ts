@@ -41,6 +41,8 @@ export const credentials = [
   { school: "Beck Institute", detail: "Advanced CBT for ADHD & Case Conceptualization" },
 ];
 
+/* The cards render as one-liners (icon + title only). `body` and `tag` are
+   kept here as reference copy but are not currently displayed. */
 export const audiences = [
   {
     emoji: "🧸",

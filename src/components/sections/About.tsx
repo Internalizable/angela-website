@@ -47,17 +47,19 @@ export default function About() {
           </Reveal>
           <Reveal delay={80} className="mt-5 space-y-4 text-ink-soft">
             <p className="text-[clamp(1.05rem,1.6vw,1.25rem)]">
-              I'm a licensed clinical psychologist trained in Cognitive Behavioral Therapy and Dialectical Behavior
-              Therapy, working with people across every stage of life.
+              I am a licensed Clinical Psychologist with specialized training in Cognitive Behavioral Therapy (CBT)
+              and Dialectical Behavior Therapy (DBT), providing evidence-based psychological care across the lifespan.
             </p>
             <p>
-              My work spans ADHD, autism and other neurodevelopmental differences, mood and anxiety disorders,
-              trauma, emotional dysregulation and the interpersonal patterns that keep us stuck. With teens I focus on
-              self-esteem, identity and academic stress; with parents, on the skills that strengthen connection at home.
+              I work with ADHD, autism spectrum disorder and other neurodevelopmental conditions, anxiety and mood
+              disorders, trauma, emotional dysregulation, and interpersonal difficulties. I also support adolescents
+              with identity, self-esteem, and academic challenges, and work with parents using evidence-based
+              strategies to strengthen parent–child relationships, improve communication, and manage behavioral and
+              emotional difficulties.
             </p>
             <p>
-              Alongside my practice I teach psychology at the American University of Beirut — so theory and
-              evidence quietly shape everything that happens in the room.
+              Alongside my clinical practice, I teach psychology at the American University of Beirut, integrating the
+              latest psychological research into compassionate, evidence-based care.
             </p>
           </Reveal>
 

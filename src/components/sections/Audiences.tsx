@@ -19,21 +19,17 @@ export default function Audiences() {
         {audiences.map((a, i) => (
           <Reveal key={a.title} delay={i * 80}>
             <article
-              className="group relative isolate flex h-full flex-col overflow-hidden rounded-[30px] p-7 transition-[transform,box-shadow] duration-500 ease-spring hover:-translate-y-2 hover:shadow-float sm:min-h-[270px]"
+              className="group relative isolate flex h-full items-center gap-3.5 overflow-hidden rounded-[20px] p-4 transition-[transform,box-shadow] duration-500 ease-spring hover:-translate-y-1 hover:shadow-float"
               style={{ background: a.tint }}
             >
               <span
-                className="absolute -right-10 -top-10 -z-10 h-[150px] w-[150px] rounded-full opacity-30 blur-[2px] transition-transform duration-500 ease-spring group-hover:scale-150"
+                className="absolute -right-8 -top-8 -z-10 h-[96px] w-[96px] rounded-full opacity-30 blur-[2px] transition-transform duration-500 ease-spring group-hover:scale-150"
                 style={{ background: a.accent }}
               />
-              <span className="grid h-[58px] w-[58px] place-items-center rounded-[20px] bg-card text-3xl shadow-soft">
+              <span className="grid h-[46px] w-[46px] shrink-0 place-items-center rounded-[15px] bg-card text-[1.35rem] shadow-soft">
                 {a.emoji}
               </span>
-              <h3 className="mt-4 text-[1.35rem] font-semibold">{a.title}</h3>
-              <p className="mt-2 flex-1 text-[0.95rem] text-ink-soft">{a.body}</p>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-[0.82rem] font-bold text-forest">
-                {a.tag}
-              </span>
+              <h3 className="text-[1.05rem] font-semibold leading-tight">{a.title}</h3>
             </article>
           </Reveal>
         ))}
