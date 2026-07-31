@@ -182,11 +182,11 @@ export const focusAreas = [
 ];
 
 /* ------------------------------------------------------------------
-   Accredited CBT training — from Angela's Brainstation Clinics
-   Letter of Completion. Figures below are taken straight from that
-   letter; update here if the certificate is ever reissued.
+   Accredited CBT training. Figures below are taken straight from
+   Angela's letter of completion; update here if it's ever reissued.
+   The awarding body is deliberately not named on the site.
    ------------------------------------------------------------------ */
-export const trainingBody = "Brainstation Clinics · Psychotherapy & Training";
+export const trainingProgramme = "Accredited CBT Psychotherapy & Training Programme";
 
 export const trainingStats = [
   { value: "2,432", label: "Total training hours" },

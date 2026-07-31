@@ -2,7 +2,7 @@ import { Section, SectionHead } from "../ui/Section";
 import Reveal from "../ui/Reveal";
 import Button from "../ui/Button";
 import { Spark, WhatsApp, ArrowRight } from "../ui/Icon";
-import { trainingBody, trainingStats, trainingPathways, trainingOffers } from "../../site";
+import { trainingProgramme, trainingStats, trainingPathways, trainingOffers } from "../../site";
 import { whatsappLink } from "../../lib/whatsapp";
 
 /* Two halves: the accredited training Angela completed (the credibility
@@ -27,7 +27,7 @@ export default function Training() {
             <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-mint">
               <Spark size={14} /> Letter of completion
             </span>
-            <h3 className="mt-4 text-[1.5rem] font-semibold text-cream">{trainingBody}</h3>
+            <h3 className="mt-4 text-[1.5rem] font-semibold text-cream">{trainingProgramme}</h3>
 
             <dl className="mt-7 grid gap-5 sm:grid-cols-3">
               {trainingStats.map((s) => (
