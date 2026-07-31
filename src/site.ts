@@ -8,6 +8,54 @@ export const site = {
   role: "Licensed Clinical Psychologist & Psychotherapist",
   credential: "CBT & DBT Trained",
   location: "Beirut, Lebanon",
+
+  /* Must match the Google Business Profile character for character — name,
+     address and phone consistency between the site and GBP is foundational
+     for local search. Dekwaneh sits in the Matn district of Mount Lebanon
+     Governorate (not Beirut Governorate), inside Greater Beirut. */
+  address: {
+    street: "FortyFour Tower",
+    locality: "Dekwaneh",
+    region: "Mount Lebanon Governorate",
+    country: "LB",
+    display: "FortyFour Tower, Dekwaneh",
+    area: "Greater Beirut",
+  },
+
+  /* Canonical Google Maps listing, by CID. Decoded from the listing's own
+     geocode (FID 0x151f179dadb73797:0xeababe886ff05c0c) rather than copied
+     from a share URL, so it carries no session tokens and won't rot.
+     Linking site <-> profile ties the two entities together for Google. */
+  googleMapsUrl: "https://maps.google.com/?cid=16914040843746171916",
+
+  /* Consultation languages. Worth surfacing prominently: "Arabic speaking
+     psychologist" and "French speaking therapist" are distinct, high-intent
+     searches in Lebanon. BCP-47 codes feed structured data. */
+  languages: [
+    { code: "en", label: "English" },
+    { code: "ar", label: "Arabic" },
+    { code: "fr", label: "French" },
+  ],
+
+  /* Mirrors the Google Business Profile hours exactly. */
+  hours: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+      opens: "09:00",
+      closes: "18:00",
+      label: "Mon – Thu",
+      display: "9:00 AM – 6:00 PM",
+    },
+    {
+      days: ["Friday"],
+      opens: "09:00",
+      closes: "16:00",
+      label: "Friday",
+      display: "9:00 AM – 4:00 PM",
+    },
+  ],
+  closedDays: ["Saturday", "Sunday"],
+
   phone: "+961 78 993 743",
   phoneHref: "tel:+96178993743",
   email: "angela.barhouch@hotmail.com",
@@ -28,6 +76,9 @@ export const nav = [
   { label: "Book", href: "#book" },
 ];
 
+/* The header nav is already at its width limit, so FAQ lives in the footer. */
+export const footerNav = [...nav.slice(0, -1), { label: "FAQ", href: "#faq" }, nav[nav.length - 1]];
+
 export const stats = [
   { value: "8+ yrs", label: "Clinical practice" },
   { value: "CBT · DBT", label: "Evidence-based" },
@@ -43,9 +94,20 @@ export const credentials = [
 
 /* The cards render as one-liners (icon + title only). `body` and `tag` are
    kept here as reference copy but are not currently displayed. */
-export const audiences = [
+export type AudienceIconName = "children" | "teens" | "adults" | "parents" | "work" | "orgs";
+
+export type Audience = {
+  icon: AudienceIconName;
+  title: string;
+  tint: string;
+  accent: string;
+  body: string;
+  tag: string;
+};
+
+export const audiences: Audience[] = [
   {
-    emoji: "🧸",
+    icon: "children",
     title: "Children",
     tint: "var(--color-tint-kids)",
     accent: "var(--color-honey)",
@@ -53,7 +115,7 @@ export const audiences = [
     tag: "Ages 4–12",
   },
   {
-    emoji: "🎧",
+    icon: "teens",
     title: "Teens & adolescents",
     tint: "var(--color-tint-teens)",
     accent: "var(--color-sky)",
@@ -61,7 +123,7 @@ export const audiences = [
     tag: "Ages 13–18",
   },
   {
-    emoji: "🌿",
+    icon: "adults",
     title: "Adults",
     tint: "var(--color-tint-adults)",
     accent: "var(--color-sage)",
@@ -69,7 +131,7 @@ export const audiences = [
     tag: "Individuals",
   },
   {
-    emoji: "🤝",
+    icon: "parents",
     title: "Parents",
     tint: "var(--color-tint-parents)",
     accent: "var(--color-blush)",
@@ -77,7 +139,7 @@ export const audiences = [
     tag: "Families",
   },
   {
-    emoji: "💼",
+    icon: "work",
     title: "Corporate & businesses",
     tint: "var(--color-tint-work)",
     accent: "var(--color-honey)",
@@ -85,7 +147,7 @@ export const audiences = [
     tag: "Teams & staff",
   },
   {
-    emoji: "🎓",
+    icon: "orgs",
     title: "NGOs & training",
     tint: "var(--color-tint-orgs)",
     accent: "var(--color-sky)",
@@ -241,6 +303,62 @@ export const trainingOffers = [
   {
     title: "Practitioners",
     body: "Clinical supervision and CBT skills training for psychologists and therapists, grounded in accredited supervisor-level qualification.",
+  },
+];
+
+/* ------------------------------------------------------------------
+   FAQ. Doubles as the source for FAQPage structured data, so every
+   answer must stay factually accurate and self-contained — search and
+   AI assistants quote these verbatim, without surrounding context.
+   ------------------------------------------------------------------ */
+export const faqs = [
+  {
+    q: "Where is Angela Barhouch's practice located?",
+    a: "The practice is at FortyFour Tower in Dekwaneh, in the Matn district just north of Beirut, Lebanon. Sessions are available in person there, or online by secure video anywhere in Lebanon and abroad.",
+  },
+  {
+    q: "Do you offer a free consultation or intro call?",
+    a: "No. There is no free intro call. Therapy begins with a full first session — a complete clinical assessment — so the work starts from the very first hour.",
+  },
+  {
+    q: "How do I book a therapy session?",
+    a: "Booking happens on WhatsApp, directly with Angela rather than through a receptionist or an online scheduler. Message her with who the session is for and what's going on, and she'll suggest times, confirm the fee, and send the address or video link.",
+  },
+  {
+    q: "Who does Angela work with?",
+    a: "Children (roughly ages 4–12), teenagers and adolescents (13–18), adults, and parents. She also delivers training and workshops for schools, NGOs, and companies, and provides clinical supervision for practitioners.",
+  },
+  {
+    q: "What is CBT and DBT?",
+    a: "Cognitive Behavioral Therapy (CBT) is a structured, evidence-based therapy that works on the links between thoughts, feelings, and behaviour. Dialectical Behavior Therapy (DBT) builds practical skills for emotional regulation, distress tolerance, mindfulness, and relationships. Angela has specialized training in both.",
+  },
+  {
+    q: "What does Angela treat?",
+    a: "ADHD, autism spectrum disorder and other neurodevelopmental conditions, anxiety disorders, depression and mood difficulties, trauma, emotional dysregulation, personality disorders, low self-esteem, identity development, academic stress, and interpersonal difficulties.",
+  },
+  {
+    q: "How many therapy sessions will I need?",
+    a: "Session 1 is a full assessment and session 2 covers psychoeducation and case formulation. From session 3 onward the treatment plan begins and therapy continues for as long as your goals need, reviewed together as you progress. It is not a fixed three-session package.",
+  },
+  {
+    q: "Is therapy confidential?",
+    a: "Yes. Everything shared in session is protected by professional ethical standards. For teenagers, sessions are confidential by design and parents are contacted only in an emergency, or when there is a risk to the teenager's safety or someone else's.",
+  },
+  {
+    q: "Do you offer therapy in Arabic or French?",
+    a: "Yes. Angela Barhouch works in Arabic, French and English, and sessions can be held in whichever of the three you are most comfortable thinking and feeling in. You can also mix languages within a session.",
+  },
+  {
+    q: "What are your opening hours?",
+    a: "Monday to Thursday, 9:00 AM to 6:00 PM, and Friday 9:00 AM to 4:00 PM. The practice is closed on Saturday and Sunday. WhatsApp messages sent outside those hours are answered when the practice reopens.",
+  },
+  {
+    q: "Do you offer online therapy in Lebanon?",
+    a: "Yes. Sessions are available by secure video for clients anywhere in Lebanon and internationally, with the same structure as in-person therapy at the Dekwaneh practice.",
+  },
+  {
+    q: "Do you provide training for organisations?",
+    a: "Yes. Angela delivers CBT-informed workshops for schools and NGOs, wellbeing and burnout sessions for corporate teams, and clinical supervision and CBT skills training for psychologists and therapists. Training enquiries start on the same WhatsApp chat as therapy bookings.",
   },
 ];
 

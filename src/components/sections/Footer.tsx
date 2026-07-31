@@ -1,5 +1,5 @@
 import Wordmark from "../brand/Wordmark";
-import { nav, site } from "../../site";
+import { footerNav, site } from "../../site";
 import { whatsappLink } from "../../lib/whatsapp";
 
 export default function Footer() {
@@ -19,7 +19,7 @@ export default function Footer() {
             <nav>
               <h4 className="font-body text-[0.8rem] font-extrabold uppercase tracking-[0.16em] text-cream">Explore</h4>
               <ul className="mt-4 grid gap-2.5">
-                {nav.map((item) => (
+                {footerNav.map((item) => (
                   <li key={item.href}>
                     <a href={item.href} className="text-[0.95rem] text-on-dark-soft transition-colors hover:text-mint">
                       {item.label}
@@ -46,7 +46,11 @@ export default function Footer() {
                     {site.email}
                   </a>
                 </li>
-                <li>{site.location}</li>
+                <li>
+                  {site.address.display}
+                  <br />
+                  {site.address.area}, Lebanon
+                </li>
                 <li>{site.modes}</li>
               </ul>
             </div>

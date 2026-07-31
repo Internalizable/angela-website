@@ -16,9 +16,38 @@ and a Three.js hero scene.
 ```bash
 bun install
 bun run dev      # http://localhost:5173
-bun run build    # type-check + production build
+bun run build    # type-check, client build, SSR build, prerender
 bun run lint
 ```
+
+## Prerendering
+
+`bun run build` runs three stages: the normal client build, a second SSR build
+of `src/entry-server.tsx`, and `scripts/prerender.mjs`, which renders the app to
+HTML and injects it into `dist/index.html`. `main.tsx` hydrates that markup in
+production and falls back to `createRoot` in dev, where the shell is empty.
+
+This exists because most AI crawlers — and any search bot that skips the render
+queue — don't execute JavaScript, and would otherwise see an empty `#root`.
+Two consequences worth remembering when editing:
+
+- **Don't hide content behind state.** The scroll-reveal rule is scoped to
+  `.js .reveal` so the prerendered page isn't invisible without scripting, and
+  the process tabs keep every track in the DOM rather than only the active one.
+- **Don't import images in components.** The SSR build hashes assets
+  separately, so component images live in `public/` and are referenced by a
+  stable path.
+
+## SEO and AI discoverability
+
+- `src/components/Seo.tsx` emits JSON-LD (`Psychologist`/`LocalBusiness`,
+  `Person`, `WebSite`, `FAQPage`) built from `site.ts`, so structured data can
+  never drift from the visible copy.
+- `public/llms.txt` is a plain-language brief for AI assistants.
+- `public/robots.txt` explicitly allows AI crawlers; `public/sitemap.xml`
+  lists the single page.
+- FAQ answers in `site.ts` are written to be quotable standalone — assistants
+  lift them without surrounding context.
 
 ## Configuring the practice details
 

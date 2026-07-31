@@ -1,5 +1,6 @@
 import { Section, SectionHead } from "../ui/Section";
 import Reveal from "../ui/Reveal";
+import AudienceIcon from "../ui/AudienceIcon";
 import { audiences } from "../../site";
 
 export default function Audiences() {
@@ -26,8 +27,16 @@ export default function Audiences() {
                 className="absolute -right-8 -top-8 -z-10 h-[96px] w-[96px] rounded-full opacity-30 blur-[2px] transition-transform duration-500 ease-spring group-hover:scale-150"
                 style={{ background: a.accent }}
               />
-              <span className="grid h-[46px] w-[46px] shrink-0 place-items-center rounded-[15px] bg-card text-[1.35rem] shadow-soft">
-                {a.emoji}
+              <span
+                className="grid h-[46px] w-[46px] shrink-0 place-items-center rounded-[15px] bg-card shadow-soft"
+                /* Straight accent is too pale for a 1.7px stroke on white, so
+                   pull it toward the forest ink while keeping its hue. */
+                style={{ color: `color-mix(in oklab, ${a.accent} 68%, var(--color-forest-deep))` }}
+              >
+                <AudienceIcon
+                  name={a.icon}
+                  className="transition-transform duration-500 ease-spring group-hover:scale-110"
+                />
               </span>
               <h3 className="text-[1.05rem] font-semibold leading-tight">{a.title}</h3>
             </article>

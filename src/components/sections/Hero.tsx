@@ -4,6 +4,7 @@ import Eyebrow from "../ui/Eyebrow";
 import { ArrowRight, Heart, Spark, WhatsApp } from "../ui/Icon";
 import { site, stats } from "../../site";
 import { whatsappLink } from "../../lib/whatsapp";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 // 3D scene is heavy + browser-only — load it after the rest of the hero paints.
 const CouchScene = lazy(() => import("../three/CouchScene"));
@@ -36,6 +37,8 @@ function FloatChip({
 }
 
 export default function Hero() {
+  const showScene = useMediaQuery("(min-width: 768px) and (prefers-reduced-motion: no-preference)");
+
   return (
     <section id="top" className="relative flex min-h-svh items-center overflow-hidden pt-24 pb-16">
       {/* atmosphere */}
@@ -48,12 +51,17 @@ export default function Hero() {
             "linear-gradient(180deg, var(--color-paper) 0%, var(--color-paper-2) 100%)",
         }}
       />
-      {/* 3D couch — beside the headline from md up; a faint backdrop on phones */}
-      <div className="absolute inset-0 z-0 max-md:opacity-40">
-        <Suspense fallback={null}>
-          <CouchScene />
-        </Suspense>
-      </div>
+      {/* 3D couch, beside the headline from md up. Gated on a media query
+          rather than CSS: it's ~530kB of Three.js for a decorative backdrop,
+          which is the wrong trade on a phone and on reduced-motion. Both
+          server and first client render return false, so hydration matches. */}
+      {showScene && (
+        <div className="absolute inset-0 z-0">
+          <Suspense fallback={null}>
+            <CouchScene />
+          </Suspense>
+        </div>
+      )}
       <div className="grain pointer-events-none absolute inset-0 z-[1] opacity-50 mix-blend-soft-light" />
 
       <div className="relative z-[2] mx-auto grid w-full max-w-[1200px] grid-cols-1 items-center gap-8 px-[clamp(20px,5vw,64px)] md:grid-cols-[1.08fr_0.92fr]">
@@ -78,8 +86,8 @@ export default function Hero() {
             data-anim
             className="mt-6 max-w-[44ch] text-[1.05rem] text-ink-soft opacity-0 animate-fade-up [animation-delay:0.42s]"
           >
-            Practical, evidence-based therapy for children, teens, adults and parents — in person in Beirut or online.
-            Plus training and workshops for schools, teams and NGOs.
+            Practical, evidence-based therapy for children, teens, adults and parents — in person in Beirut, Lebanon,
+            or online wherever you are. Plus training and workshops for schools, teams and NGOs.
           </p>
 
           <div data-anim className="mt-8 flex flex-wrap gap-3.5 opacity-0 animate-fade-up [animation-delay:0.56s]">

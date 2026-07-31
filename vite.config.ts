@@ -10,6 +10,11 @@ const SITE_URL = (process.env.SITE_URL || 'https://www.angelabarhouch.com').repl
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Structured data needs the same absolute origin as the meta tags.
+  define: {
+    __SITE_ORIGIN__: JSON.stringify(SITE_URL),
+    __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
+  },
   plugins: [
     react(),
     tailwindcss(),

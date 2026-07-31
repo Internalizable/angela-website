@@ -63,6 +63,14 @@
   --animate-scroll-x: scroll-x 38s linear infinite;
   --animate-wheel: wheel 1.6s var(--ease-soft) infinite;
   --animate-float-slow: float-slow 7s ease-in-out infinite;
+
+  /* Idle loops for the audience-card icons. Each rests at 0%/100% so the
+     reduced-motion override leaves them in a neutral pose. */
+  --animate-icon-bob: icon-bob 5s ease-in-out infinite;
+  --animate-icon-sway: icon-sway 4.5s ease-in-out infinite;
+  --animate-icon-beat: icon-beat 2.6s ease-in-out infinite;
+  --animate-icon-lift: icon-lift 5.5s ease-in-out infinite;
+  --animate-icon-swing: icon-swing 4s ease-in-out infinite;
 }
 
 @keyframes rise {
@@ -84,6 +92,30 @@
 @keyframes float-slow {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+@keyframes icon-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.2px); }
+}
+@keyframes icon-sway {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-4.5deg); }
+  75% { transform: rotate(4.5deg); }
+}
+@keyframes icon-beat {
+  0%, 60%, 100% { transform: scale(1); }
+  10% { transform: scale(1.14); }
+  22% { transform: scale(1); }
+  32% { transform: scale(1.09); }
+}
+@keyframes icon-lift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.4px); }
+}
+@keyframes icon-swing {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-9deg); }
+  75% { transform: rotate(9deg); }
 }
 
 /* ---------------------------- Base ------------------------------- */
@@ -149,8 +181,12 @@
     animation: var(--animate-rise);
   }
 
-  /* Scroll-into-view reveal (driven by IntersectionObserver) */
-  .reveal {
+  /* Scroll-into-view reveal (driven by IntersectionObserver).
+     Scoped to .js: only hide the content when JavaScript is there to reveal
+     it again. The HTML is prerendered, so a crawler that doesn't run scripts
+     must still see every section at full opacity rather than a page of
+     invisible text. */
+  .js .reveal {
     opacity: 0;
     transform: translateY(28px);
     transition:

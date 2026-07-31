@@ -4,7 +4,7 @@ import * as THREE from "three";
 /* ------------------------------------------------------------------
    The signature element. A soft clay couch — the logo's two speech
    bubbles, here a place to sit — breathing gently while pastel
-   "thoughts" drift upward. Cursor nudges the whole scene in 3D.
+   "thoughts" drift upward.
 
    No real-time shadow maps: Safari/Metal WebGL is flaky with PCFSoft
    depth textures (it dropped the whole couch). Instead a baked radial
@@ -16,9 +16,20 @@ const PALETTE = {
   back: 0x5d8a63,
   arm: 0x3f6147,
   cushion: 0xc7ddb9,
+  base: 0x4c7355,
   leg: 0x2e4636,
 };
 const ORB_COLORS = [0xb7d3ac, 0xe7ad57, 0x82b2c4, 0xe0a08f, 0xd8e7ce];
+
+/* The couch's real extents, in world units. Every part below is placed so
+   that it physically overlaps its neighbour — the seat sits in the back,
+   the plinth sits in the seat, the legs sit in the plinth — so the model
+   never reads as loose floating pieces from any camera angle. */
+const MODEL_W = 3.6; // arm to arm
+const MODEL_H = 2.2; // leg tips to top of the backrest
+// generous half-extents used for framing (covers the idle sway + bob)
+const SAFE_HALF_W = 2.0;
+const SAFE_HALF_H = 1.25;
 
 function makeCouch(): THREE.Group {
   const couch = new THREE.Group();
@@ -39,28 +50,36 @@ function makeCouch(): THREE.Group {
     return m;
   };
 
-  // backrest + seat (capsules lying along X)
-  pill(0.52, 1.9, PALETTE.back, [0, 0.62, -0.25], Math.PI / 2);
-  pill(0.46, 1.9, PALETTE.seat, [0, -0.1, 0.15], Math.PI / 2);
+  // backrest + seat (capsules lying along X, overlapping each other)
+  pill(0.5, 1.8, PALETTE.back, [0, 0.58, -0.28], Math.PI / 2);
+  pill(0.45, 1.8, PALETTE.seat, [0, -0.06, 0.16], Math.PI / 2);
 
   // two rounded cushions resting on the seat
-  pill(0.34, 0.55, PALETTE.cushion, [-0.62, 0.18, 0.18], Math.PI / 2);
-  pill(0.34, 0.55, PALETTE.cushion, [0.62, 0.18, 0.18], Math.PI / 2);
+  pill(0.33, 0.6, PALETTE.cushion, [-0.6, 0.16, 0.2], Math.PI / 2);
+  pill(0.33, 0.6, PALETTE.cushion, [0.6, 0.16, 0.2], Math.PI / 2);
 
-  // armrests
-  pill(0.3, 0.5, PALETTE.arm, [-1.5, 0.18, 0.05]);
-  pill(0.3, 0.5, PALETTE.arm, [1.5, 0.18, 0.05]);
+  // armrests — sunk into the ends of the seat and backrest
+  pill(0.3, 0.5, PALETTE.arm, [-1.5, 0.16, 0.02]);
+  pill(0.3, 0.5, PALETTE.arm, [1.5, 0.16, 0.02]);
 
-  // little legs
-  const legGeo = new THREE.CylinderGeometry(0.1, 0.08, 0.5, 16);
+  // a slim base rail tucked under the seat — grounds the couch without
+  // reading as a crate
+  pill(0.2, 2.2, PALETTE.base, [0, -0.46, 0.14], Math.PI / 2);
+
+  // legs — each one runs a long way up, ending *inside* the seat capsule, so
+  // there is no seam to come apart at any camera angle. Splayed a touch out.
+  const legGeo = new THREE.CylinderGeometry(0.1, 0.075, 0.74, 16);
+  const legMat = mat(PALETTE.leg, 0.6);
   for (const [x, z] of [
-    [-1.35, 0.45],
-    [1.35, 0.45],
-    [-1.35, -0.45],
-    [1.35, -0.45],
+    [-1.1, 0.28],
+    [1.1, 0.28],
+    [-1.1, -0.28],
+    [1.1, -0.28],
   ]) {
-    const leg = new THREE.Mesh(legGeo, mat(PALETTE.leg, 0.6));
-    leg.position.set(x, -0.78, z);
+    const leg = new THREE.Mesh(legGeo, legMat);
+    leg.position.set(x, -0.68, z);
+    leg.rotation.z = x > 0 ? -0.09 : 0.09;
+    leg.rotation.x = z > 0 ? 0.07 : -0.07;
     couch.add(leg);
   }
 
@@ -82,13 +101,40 @@ function makeContactShadow(): THREE.Mesh {
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
   const mesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(7, 4),
+    new THREE.PlaneGeometry(6.4, 3.4),
     new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false }),
   );
   mesh.rotation.x = -Math.PI / 2;
-  mesh.position.y = -1.02;
+  mesh.position.set(0, -1.11, 0.1);
   mesh.renderOrder = -1;
   return mesh;
+}
+
+const FOV = 40;
+const TAN_HALF_FOV = Math.tan((FOV / 2) * THREE.MathUtils.DEG2RAD);
+
+/* Where the couch should land on screen, in CSS pixels, mirroring the hero's
+   own grid: max-w-[1200px], px-[clamp(20px,5vw,64px)], gap-8,
+   md:grid-cols-[1.08fr_0.92fr]. From md up the couch fills the second column
+   (plus a little bleed into the gutter) so it never lands on the headline;
+   below md it is centred behind the copy. */
+function frameFor(w: number, h: number) {
+  const pad = Math.min(64, Math.max(20, w * 0.05));
+  const content = Math.min(1200, Math.max(240, w - pad * 2));
+  const left = (w - content) / 2;
+  const GAP = 32;
+  const colA = (content - GAP) * (1.08 / 2);
+  const colB = content - GAP - colA;
+  const twoCol = w >= 768;
+
+  return {
+    centerPx: twoCol ? left + colA + GAP + colB / 2 : w / 2,
+    // target on-screen size of the couch
+    targetW: twoCol ? colB + GAP * 2 : w * 0.86,
+    targetH: h * (twoCol ? 0.4 : 0.3),
+    // on phones it sits low, behind the copy rather than through the headline
+    dropY: twoCol ? 0 : 0.2,
+  };
 }
 
 export default function CouchScene() {
@@ -101,10 +147,11 @@ export default function CouchScene() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0xeef3e8, 9, 22);
+    const fog = new THREE.Fog(0xeef3e8, 12, 26);
+    scene.fog = fog;
 
-    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
-    camera.position.set(0, 0.6, 8.6);
+    const camera = new THREE.PerspectiveCamera(FOV, 1, 0.1, 100);
+    camera.position.set(0, 0.55, 9);
 
     // WebGL may be unavailable (old hardware, blockers, headless). If so we
     // bail quietly — the hero's CSS gradient stands in for the scene.
@@ -118,6 +165,10 @@ export default function CouchScene() {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.05;
+    // The drawing buffer is sized in device pixels; the element itself must be
+    // pinned to the mount in CSS pixels or it renders at devicePixelRatio times
+    // its box (which pushed the couch clean off-screen on every retina display).
+    renderer.domElement.style.cssText = "display:block;width:100%;height:100%";
     mount.appendChild(renderer.domElement);
 
     // ---- lighting: soft daylight + a warm fill for a friendly mood ----
@@ -129,54 +180,29 @@ export default function CouchScene() {
     warm.position.set(5, 2, 4);
     scene.add(warm);
 
-    // ---- couch + its contact shadow, grouped so they move together ----
-    // The couch sits in the right half on wide screens while the camera looks
-    // left-of-it, keeping the headline column clear; it centres on narrow ones.
+    // ---- couch + its contact shadow + orbs, grouped so they move together ----
     const stage = new THREE.Group();
     const couch = makeCouch();
     stage.add(couch);
     stage.add(makeContactShadow());
     scene.add(stage);
-    let lookX = 0;
 
-    // Frame the couch for the viewport so it's clearly visible at every size —
-    // beside the headline on wide screens, a touch smaller-and-right on laptops
-    // and tablets, gently centred on phones. Also zoom out for short/narrow
-    // viewports (aspect) so it never gets cropped.
-    const place = (w: number, h: number) => {
-      const aspect = w / h;
-      let stageX: number, camZ: number, scale: number;
-      if (w >= 1180) {
-        stageX = 2.5; lookX = 0.85; camZ = 8.6; scale = 1;
-      } else if (w >= 1024) {
-        stageX = 2.2; lookX = 0.7; camZ = 8.9; scale = 0.95;
-      } else if (w >= 768) {
-        stageX = 1.75; lookX = 0.55; camZ = 9.2; scale = 0.88;
-      } else {
-        stageX = 0; lookX = 0; camZ = 10.2; scale = 0.9;
-      }
-      // pull back further when the viewport is wide-but-short or very narrow
-      if (aspect > 2) camZ += (aspect - 2) * 1.6;
-      if (aspect < 1) camZ += (1 - aspect) * 2.4;
-      stage.position.x = stageX;
-      camera.position.z = camZ;
-      couch.scale.setScalar(scale);
-    };
-
-    // ---- drifting "thought" orbs, biased to the couch's side ----
+    // ---- drifting "thought" orbs, orbiting the couch inside the stage ----
     const orbs: { mesh: THREE.Mesh; speed: number; sway: number; phase: number; baseX: number }[] = [];
     const orbGeo = new THREE.SphereGeometry(1, 24, 24);
-    for (let i = 0; i < 15; i++) {
+    const orbCount = window.innerWidth < 768 ? 9 : 13;
+    for (let i = 0; i < orbCount; i++) {
       const color = ORB_COLORS[i % ORB_COLORS.length];
-      const r = THREE.MathUtils.randFloat(0.09, 0.28);
+      const r = THREE.MathUtils.randFloat(0.08, 0.2);
       const mesh = new THREE.Mesh(
         orbGeo,
         new THREE.MeshStandardMaterial({ color, roughness: 0.4, metalness: 0, transparent: true, opacity: 0.95 }),
       );
       mesh.scale.setScalar(r);
-      const baseX = THREE.MathUtils.randFloat(0.4, 5.2);
-      mesh.position.set(baseX, THREE.MathUtils.randFloat(-2, 3.4), THREE.MathUtils.randFloat(-2, 2.2));
-      scene.add(mesh);
+      // kept inside the couch's own column so they never drift over the nav
+      const baseX = THREE.MathUtils.randFloat(-1.9, 1.9);
+      mesh.position.set(baseX, THREE.MathUtils.randFloat(-1.7, 1.7), THREE.MathUtils.randFloat(-1.4, 1.1));
+      stage.add(mesh);
       orbs.push({
         mesh,
         speed: THREE.MathUtils.randFloat(0.12, 0.4),
@@ -186,20 +212,61 @@ export default function CouchScene() {
       });
     }
 
+    /* ---- responsive framing ----
+       Solve for the camera distance that renders the couch at the intended
+       CSS-pixel size, take whichever of the width/height targets asks for the
+       smaller couch, then clamp its offset so it can never leave the frame.
+       This holds at any aspect ratio — ultrawide, laptop, tablet, phone. */
+    let baseX = 0;
+    let baseY = 0;
+    const place = (w: number, h: number) => {
+      const aspect = w / h;
+      const f = frameFor(w, h);
+
+      const offsetFrac = (f.centerPx / w - 0.5) * 2; // couch centre, as a share of the half-width
+
+      const zForWidth = (MODEL_W * w) / (2 * f.targetW * TAN_HALF_FOV * aspect);
+      const zForHeight = (MODEL_H * h) / (2 * f.targetH * TAN_HALF_FOV);
+      // ...and far enough back that the couch still clears the frame *after*
+      // being pushed sideways — otherwise a narrow column (tablet portrait)
+      // would drag it back over the copy instead of shrinking it.
+      const zToFit = (SAFE_HALF_W + 0.15) / (1 - Math.abs(offsetFrac)) / (TAN_HALF_FOV * aspect);
+      const camZ = THREE.MathUtils.clamp(Math.max(zForWidth, zForHeight, zToFit), 5, 32);
+
+      const visHalfH = camZ * TAN_HALF_FOV;
+      const visHalfW = visHalfH * aspect;
+
+      const maxX = Math.max(0, visHalfW - SAFE_HALF_W - 0.15);
+      const maxY = Math.max(0, visHalfH - SAFE_HALF_H - 0.15);
+      baseX = THREE.MathUtils.clamp(offsetFrac * visHalfW, -maxX, maxX);
+      baseY = THREE.MathUtils.clamp(-f.dropY * visHalfH, -maxY, maxY);
+
+      camera.position.z = camZ;
+      stage.position.set(baseX, baseY, 0);
+      // keep the haze just behind the couch instead of at a fixed depth
+      fog.near = camZ + 1.5;
+      fog.far = camZ + 13;
+    };
+
     // ---- responsive sizing ----
     const resize = () => {
-      const { clientWidth: w, clientHeight: h } = mount;
+      const w = mount.clientWidth;
+      const h = mount.clientHeight;
       if (!w || !h) return;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       place(w, h);
       camera.updateProjectionMatrix();
+      camera.lookAt(baseX * 0.12, baseY, 0);
     };
     const ro = new ResizeObserver(resize);
     ro.observe(mount);
     resize();
 
     // ---- cursor parallax (desktop pointers only) ----
+    // Applied to the couch itself, never the camera, so the framing solved
+    // above stays exactly as computed.
     const target = { x: 0, y: 0 };
     const onPointer = (e: PointerEvent) => {
       target.x = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -209,29 +276,31 @@ export default function CouchScene() {
     if (fine && !reduceMotion) window.addEventListener("pointermove", onPointer);
 
     // ---- animation loop ----
-    const clock = new THREE.Clock();
     let raf = 0;
     let running = true;
+    let t = 0;
+    let last = performance.now();
 
     const tick = () => {
-      const t = clock.getElapsedTime();
+      const now = performance.now();
+      const dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      t += dt;
 
       if (!reduceMotion) {
-        couch.position.y = Math.sin(t * 0.9) * 0.08;
-        couch.rotation.y = THREE.MathUtils.lerp(couch.rotation.y, target.x * 0.32 - 0.12, 0.05);
-        couch.rotation.x = THREE.MathUtils.lerp(couch.rotation.x, target.y * 0.12, 0.05);
-        camera.position.x = THREE.MathUtils.lerp(camera.position.x, lookX + target.x * 0.5, 0.04);
-        camera.lookAt(lookX, 0, 0);
+        couch.position.y = Math.sin(t * 0.9) * 0.07;
+        couch.rotation.y = THREE.MathUtils.lerp(couch.rotation.y, target.x * 0.26 - 0.14, 0.05);
+        couch.rotation.x = THREE.MathUtils.lerp(couch.rotation.x, target.y * 0.1, 0.05);
+        stage.position.x = THREE.MathUtils.lerp(stage.position.x, baseX + target.x * 0.14, 0.04);
 
         for (const o of orbs) {
-          o.mesh.position.y += o.speed * 0.016;
-          o.mesh.position.x = o.baseX + Math.sin(t * o.sway + o.phase) * 0.5;
-          if (o.mesh.position.y > 3.6) o.mesh.position.y = -2.4;
+          o.mesh.position.y += o.speed * dt;
+          o.mesh.position.x = o.baseX + Math.sin(t * o.sway + o.phase) * 0.4;
+          if (o.mesh.position.y > 1.9) o.mesh.position.y = -1.9;
         }
       } else {
-        couch.rotation.y = -0.12;
-        camera.position.x = lookX;
-        camera.lookAt(lookX, 0, 0);
+        couch.rotation.y = -0.14;
+        stage.position.x = baseX;
       }
 
       renderer.render(scene, camera);
@@ -246,7 +315,7 @@ export default function CouchScene() {
         cancelAnimationFrame(raf);
       } else if (!running) {
         running = true;
-        clock.getDelta();
+        last = performance.now();
         tick();
       }
     };
@@ -258,7 +327,15 @@ export default function CouchScene() {
       running = false;
       cancelAnimationFrame(raf);
     };
+    const onContextRestored = () => {
+      if (running) return;
+      running = true;
+      resize();
+      last = performance.now();
+      tick();
+    };
     renderer.domElement.addEventListener("webglcontextlost", onContextLost);
+    renderer.domElement.addEventListener("webglcontextrestored", onContextRestored);
 
     // ---- cleanup ----
     return () => {
@@ -268,6 +345,7 @@ export default function CouchScene() {
       window.removeEventListener("pointermove", onPointer);
       document.removeEventListener("visibilitychange", onVisibility);
       renderer.domElement.removeEventListener("webglcontextlost", onContextLost);
+      renderer.domElement.removeEventListener("webglcontextrestored", onContextRestored);
       scene.traverse((obj) => {
         if (obj instanceof THREE.Mesh) {
           obj.geometry.dispose();
@@ -284,5 +362,5 @@ export default function CouchScene() {
     };
   }, []);
 
-  return <div ref={mountRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />;
+  return <div ref={mountRef} className="absolute inset-0 h-full w-full overflow-hidden" aria-hidden="true" />;
 }

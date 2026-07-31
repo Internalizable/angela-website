@@ -90,6 +90,20 @@ export const WhatsApp = ({ size = 24, ...rest }: IconProps) => (
   </svg>
 );
 
+export const Clock = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3.5 2" />
+  </Base>
+);
+
+export const Globe = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18" />
+  </Base>
+);
+
 export const Leaf = (p: IconProps) => (
   <Base {...p}>
     <path d="M4 20C4 11 11 4 20 4c0 9-7 16-16 16Z" />

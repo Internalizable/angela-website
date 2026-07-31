@@ -6,7 +6,9 @@ import Audiences from "./components/sections/Audiences";
 import Process from "./components/sections/Process";
 import Focus from "./components/sections/Focus";
 import Training from "./components/sections/Training";
+import Faq from "./components/sections/Faq";
 import Booking from "./components/sections/Booking";
+import Seo from "./components/Seo";
 import Footer from "./components/sections/Footer";
 
 export default function App() {
@@ -27,9 +29,11 @@ export default function App() {
         <Process />
         <Focus />
         <Training />
+        <Faq />
         <Booking />
       </main>
       <Footer />
+      <Seo />
     </>
   );
 }

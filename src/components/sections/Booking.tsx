@@ -2,10 +2,10 @@ import { Section } from "../ui/Section";
 import Eyebrow from "../ui/Eyebrow";
 import Reveal from "../ui/Reveal";
 import Button from "../ui/Button";
-import { Phone, Pin, Screen, WhatsApp, ArrowRight } from "../ui/Icon";
+import { Phone, Pin, Screen, WhatsApp, ArrowRight, Clock, Globe } from "../ui/Icon";
 import { site } from "../../site";
 import { whatsappLink } from "../../lib/whatsapp";
-import avatar from "../../assets/angela-avatar.webp";
+const avatar = "/angela-avatar.webp";
 
 /* What to expect when the chat opens — sets honest expectations in place
    of a scheduler, since booking is a direct conversation with Angela. */
@@ -39,15 +39,22 @@ export default function Booking() {
                 <span className="text-[0.9rem] text-ink-mute">Call or WhatsApp</span>
               </span>
             </a>
-            <div className="flex items-center gap-3.5 rounded-[20px] bg-card p-4 shadow-soft">
+            <a
+              href={site.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-3.5 rounded-[20px] bg-card p-4 shadow-soft transition-transform duration-300 ease-spring hover:translate-x-1"
+            >
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-tint-kids text-sage-ink">
                 <Pin size={20} />
               </span>
               <span>
-                <b className="block font-bold text-forest">{site.location}</b>
-                <span className="text-[0.9rem] text-ink-mute">In-person practice</span>
+                <b className="block font-bold text-forest">{site.address.display}</b>
+                <span className="text-[0.9rem] text-ink-mute">
+                  In-person practice · {site.address.area} · Directions
+                </span>
               </span>
-            </div>
+            </a>
             <div className="flex items-center gap-3.5 rounded-[20px] bg-card p-4 shadow-soft">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-tint-parents text-sage-ink">
                 <Screen size={20} />
@@ -55,6 +62,35 @@ export default function Booking() {
               <span>
                 <b className="block font-bold text-forest">Online sessions</b>
                 <span className="text-[0.9rem] text-ink-mute">Secure video, anywhere</span>
+              </span>
+            </div>
+
+            <div className="flex items-start gap-3.5 rounded-[20px] bg-card p-4 shadow-soft">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-tint-work text-sage-ink">
+                <Clock size={20} />
+              </span>
+              <span>
+                <b className="block font-bold text-forest">Opening hours</b>
+                {site.hours.map((h) => (
+                  <span key={h.label} className="block text-[0.9rem] text-ink-mute">
+                    {h.label} · {h.display}
+                  </span>
+                ))}
+                <span className="block text-[0.9rem] text-ink-mute">
+                  {site.closedDays.join(" & ")} · closed
+                </span>
+              </span>
+            </div>
+
+            <div className="flex items-center gap-3.5 rounded-[20px] bg-card p-4 shadow-soft">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-tint-orgs text-sage-ink">
+                <Globe size={20} />
+              </span>
+              <span>
+                <b className="block font-bold text-forest">
+                  {site.languages.map((l) => l.label).join(" · ")}
+                </b>
+                <span className="text-[0.9rem] text-ink-mute">Sessions in any of the three</span>
               </span>
             </div>
           </div>

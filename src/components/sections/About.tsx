@@ -3,7 +3,11 @@ import Eyebrow from "../ui/Eyebrow";
 import Reveal from "../ui/Reveal";
 import { Pin, Screen, Leaf } from "../ui/Icon";
 import { credentials, site } from "../../site";
-import portrait from "../../assets/angela-cutout.webp";
+
+/* Served from public/ rather than imported: the prerender pass runs a separate
+   SSR bundle, and hashed asset imports would resolve to a different filename
+   there than in the client build. A stable path keeps both in agreement. */
+const portrait = "/angela-cutout.webp";
 
 export default function About() {
   return (
