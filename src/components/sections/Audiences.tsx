@@ -12,10 +12,10 @@ export default function Audiences() {
             Care shaped around <span className="italic font-medium text-sage">who you are</span>.
           </>
         }
-        intro="Every age meets the world differently. Each path below is built around what that stage of life actually needs."
+        intro="Every age — and every organisation — meets the world differently. Each path below is built around what that stage of life, or that team, actually needs."
       />
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {audiences.map((a, i) => (
           <Reveal key={a.title} delay={i * 80}>
             <article

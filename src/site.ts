@@ -10,12 +10,13 @@ export const site = {
   location: "Beirut, Lebanon",
   phone: "+961 78 993 743",
   phoneHref: "tel:+96178993743",
-  email: "hello@angelabarhouch.com",
+  email: "angela.barhouch@hotmail.com",
+  emailHref: "mailto:angela.barhouch@hotmail.com",
   modes: "In-person & Online",
 
-  /* Replace with Angela's real Calendly scheduling link.
-     The whole booking section + nav button read from this one value. */
-  calendlyUrl: "https://calendly.com/angela-barhouch/intro-call",
+  /* Every "Book a session" CTA on the site opens this chat.
+     Booking happens directly with Angela on WhatsApp Business. */
+  whatsappUrl: "https://wa.me/message/GKBJIIJAJNRJJ1",
 } as const;
 
 export const nav = [
@@ -23,6 +24,7 @@ export const nav = [
   { label: "Who I help", href: "#who" },
   { label: "How it works", href: "#process" },
   { label: "Focus", href: "#focus" },
+  { label: "Training", href: "#training" },
   { label: "Book", href: "#book" },
 ];
 
@@ -43,34 +45,50 @@ export const audiences = [
   {
     emoji: "🧸",
     title: "Children",
-    tint: "var(--tint-kids)",
-    accent: "var(--honey)",
+    tint: "var(--color-tint-kids)",
+    accent: "var(--color-honey)",
     body: "Play-informed, parent-supported care that helps little ones feel understood and build early coping skills.",
     tag: "Ages 4–12",
   },
   {
     emoji: "🎧",
-    title: "Teenagers",
-    tint: "var(--tint-teens)",
-    accent: "var(--sky)",
+    title: "Teens & adolescents",
+    tint: "var(--color-tint-teens)",
+    accent: "var(--color-sky)",
     body: "A confidential space for identity, self-esteem, emotional regulation and the weight of academic stress.",
     tag: "Ages 13–18",
   },
   {
     emoji: "🌿",
     title: "Adults",
-    tint: "var(--tint-adults)",
-    accent: "var(--sage)",
+    tint: "var(--color-tint-adults)",
+    accent: "var(--color-sage)",
     body: "Structured CBT & DBT for anxiety, mood, trauma and the patterns you're ready to gently rewrite.",
     tag: "Individuals",
   },
   {
     emoji: "🤝",
     title: "Parents",
-    tint: "var(--tint-parents)",
-    accent: "var(--blush)",
+    tint: "var(--color-tint-parents)",
+    accent: "var(--color-blush)",
     body: "Psychoeducation and parenting-skills coaching to strengthen the relationship at home.",
     tag: "Families",
+  },
+  {
+    emoji: "💼",
+    title: "Corporate & businesses",
+    tint: "var(--color-tint-work)",
+    accent: "var(--color-honey)",
+    body: "Workplace wellbeing sessions, stress and burnout workshops, and psychoeducation for managers and teams.",
+    tag: "Teams & staff",
+  },
+  {
+    emoji: "🎓",
+    title: "NGOs & training",
+    tint: "var(--color-tint-orgs)",
+    accent: "var(--color-sky)",
+    body: "Accredited CBT-informed training, workshops and clinical supervision for NGOs, schools and practitioners.",
+    tag: "Organisations",
   },
 ];
 
@@ -96,9 +114,9 @@ export const processTracks: ProcessTrack[] = [
         line: "Session 2",
       },
       {
-        title: "Treatment",
-        body: "Clear, collaborative goals delivered through CBT & DBT, monitored and adjusted as you grow.",
-        line: "Ongoing",
+        title: "Treatment plan starts",
+        body: "Clear, collaborative goals delivered through CBT & DBT — reviewed and adjusted for as many sessions as your progress needs.",
+        line: "Session 3+ · ongoing",
       },
     ],
   },
@@ -117,9 +135,9 @@ export const processTracks: ProcessTrack[] = [
         line: "Session 2",
       },
       {
-        title: "Feedback & plan",
-        body: "Back with parents for feedback, psychoeducation and a treatment plan reviewed throughout therapy.",
-        line: "Session 3",
+        title: "Feedback & treatment plan starts",
+        body: "Back with parents for feedback and psychoeducation, then therapy begins — an ongoing plan reviewed together as your child progresses.",
+        line: "Session 3+ · ongoing",
       },
     ],
   },
@@ -133,14 +151,14 @@ export const processTracks: ProcessTrack[] = [
         line: "Session 1",
       },
       {
-        title: "Confidential by design",
-        body: "Sessions stay private under ethical guidelines — a space that's genuinely their own.",
-        line: "Always",
+        title: "Confidential case formulation",
+        body: "We map out what's going on and share the formulation with your teen. Sessions stay private — parents are contacted only in an emergency or when there's a risk to their safety or someone else's.",
+        line: "Session 2",
       },
       {
-        title: "Safety first",
-        body: "Parents are contacted only in an emergency or when there's a risk to your teen's safety or others'.",
-        line: "If needed",
+        title: "Treatment plan starts",
+        body: "Goals set with your teen and worked through with CBT & DBT, continuing for as many sessions as their progress needs.",
+        line: "Session 3+ · ongoing",
       },
     ],
   },
@@ -159,6 +177,69 @@ export const focusAreas = [
   "Academic stress",
   "Interpersonal challenges",
   "Behavioural difficulties",
+];
+
+/* ------------------------------------------------------------------
+   Accredited CBT training — from Angela's Brainstation Clinics
+   Letter of Completion. Figures below are taken straight from that
+   letter; update here if the certificate is ever reissued.
+   ------------------------------------------------------------------ */
+export const trainingBody = "Brainstation Clinics · Psychotherapy & Training";
+
+export const trainingStats = [
+  { value: "2,432", label: "Total training hours" },
+  { value: "1,350", label: "Supervision hours" },
+  { value: "High Distinction", label: "Final award" },
+];
+
+export const trainingPathways = [
+  {
+    tag: "Pathway I",
+    title: "CBT for Complex Cases",
+    items: [
+      "Personality disorders",
+      "Psychosis & schizophrenia",
+      "Trauma & PTSD",
+      "Ending treatment & relapse management",
+    ],
+  },
+  {
+    tag: "Pathway II",
+    title: "CBT for Children & Adolescents",
+    items: [
+      "Adjusting CBT for children",
+      "Session structure with parents & adolescents",
+      "OCD, phobias, social & test anxiety",
+      "ADHD / ODD, trauma & separation anxiety",
+      "Typical vs atypical anxiety in children",
+    ],
+  },
+  {
+    tag: "Pathway III",
+    title: "CBT for Trainers & Supervisors",
+    items: [
+      "CBT supervision & group supervision",
+      "The supervisory relationship & contracting",
+      "Identifying training needs & evaluating impact",
+      "Ethics & diversity, including neurodiversity",
+    ],
+  },
+];
+
+/* Training and workshops Angela delivers to organisations. */
+export const trainingOffers = [
+  {
+    title: "Schools & NGOs",
+    body: "CBT-informed workshops for teachers, counsellors and frontline staff — child and adolescent mental health, anxiety, behaviour and safeguarding conversations.",
+  },
+  {
+    title: "Corporate & teams",
+    body: "Practical sessions on stress, burnout, emotional regulation and supporting a struggling colleague, sized to your team and schedule.",
+  },
+  {
+    title: "Practitioners",
+    body: "Clinical supervision and CBT skills training for psychologists and therapists, grounded in accredited supervisor-level qualification.",
+  },
 ];
 
 export const values = [

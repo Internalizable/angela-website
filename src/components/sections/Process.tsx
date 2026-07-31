@@ -15,7 +15,7 @@ export default function Process() {
         tone="onDark"
         eyebrow="How therapy works"
         title={<span className="text-cream">A clear path from first hello to lasting change.</span>}
-        intro="No mystery, no jargon. Here's exactly how the first few sessions tend to unfold — choose a path to see it."
+        intro="No mystery, no jargon. Here's exactly how the first sessions tend to unfold — choose a path to see it."
       />
 
       <Reveal
@@ -54,6 +54,15 @@ export default function Process() {
           </Reveal>
         ))}
       </div>
+
+      {/* Therapy isn't a three-session package — say so plainly. */}
+      <Reveal delay={280}>
+        <p className="mt-8 max-w-[62ch] text-[0.98rem] text-on-dark-soft">
+          <b className="font-display text-cream">Therapy continues from there.</b> These are the opening sessions, not
+          the whole course — from session three onward we work through the treatment plan for as long as your goals
+          need, reviewing progress together as we go.
+        </p>
+      </Reveal>
     </Section>
   );
 }

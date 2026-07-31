@@ -1,9 +1,9 @@
 import { lazy, Suspense } from "react";
 import Button from "../ui/Button";
 import Eyebrow from "../ui/Eyebrow";
-import { ArrowRight, Calendar, Heart, Spark, Shield } from "../ui/Icon";
+import { ArrowRight, Heart, Spark, WhatsApp } from "../ui/Icon";
 import { site, stats } from "../../site";
-import { openCalendlyPopup } from "../../lib/calendly";
+import { whatsappLink } from "../../lib/whatsapp";
 
 // 3D scene is heavy + browser-only — load it after the rest of the hero paints.
 const CouchScene = lazy(() => import("../three/CouchScene"));
@@ -78,14 +78,14 @@ export default function Hero() {
             data-anim
             className="mt-6 max-w-[44ch] text-[1.05rem] text-ink-soft opacity-0 animate-fade-up [animation-delay:0.42s]"
           >
-            Warm, evidence-based therapy for children, teens, adults and parents — in person in Beirut or online,
-            wherever you are.
+            Practical, evidence-based therapy for children, teens, adults and parents — in person in Beirut or online.
+            Plus training and workshops for schools, teams and NGOs.
           </p>
 
           <div data-anim className="mt-8 flex flex-wrap gap-3.5 opacity-0 animate-fade-up [animation-delay:0.56s]">
-            <Button size="lg" onClick={() => openCalendlyPopup(site.calendlyUrl)}>
-              <Calendar size={19} />
-              Book a free intro call
+            <Button as="a" size="lg" {...whatsappLink}>
+              <WhatsApp size={19} />
+              Book a session
             </Button>
             <Button as="a" href="#about" variant="ghost" size="lg">
               Meet Angela
@@ -123,20 +123,20 @@ export default function Hero() {
           </FloatChip>
 
           {/* a small glass booking nudge that doubles as a CTA */}
-          <button
-            onClick={() => openCalendlyPopup(site.calendlyUrl)}
+          <a
+            {...whatsappLink}
             className="group absolute bottom-2 right-0 flex items-center gap-3 rounded-2xl border border-white/60 bg-white/70 p-3 pr-4 text-left shadow-float backdrop-blur-md transition-transform duration-300 ease-spring hover:-translate-y-1"
           >
             <span className="grid h-11 w-11 place-items-center rounded-xl bg-mint-soft text-sage-ink">
-              <Shield size={22} />
+              <WhatsApp size={22} />
             </span>
             <span>
               <span className="block font-display text-[1.05rem] font-semibold leading-tight text-forest">
-                Free 15-min intro call
+                Book on WhatsApp
               </span>
-              <span className="text-[0.82rem] text-ink-mute">Confidential · no commitment</span>
+              <span className="text-[0.82rem] text-ink-mute">Message Angela directly · confidential</span>
             </span>
-          </button>
+          </a>
         </div>
       </div>
 

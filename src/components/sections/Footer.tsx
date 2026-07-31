@@ -1,5 +1,6 @@
 import Wordmark from "../brand/Wordmark";
 import { nav, site } from "../../site";
+import { whatsappLink } from "../../lib/whatsapp";
 
 export default function Footer() {
   return (
@@ -10,7 +11,7 @@ export default function Footer() {
             <Wordmark onDark />
             <p className="mt-4 text-[0.95rem] text-on-dark-soft">
               Licensed clinical psychologist & psychotherapist. CBT & DBT-trained care for children, teens, adults
-              and parents — in {site.location} and online.
+              and parents — plus training for schools, NGOs and companies — in {site.location} and online.
             </p>
           </div>
 
@@ -33,6 +34,16 @@ export default function Footer() {
                 <li>
                   <a href={site.phoneHref} className="transition-colors hover:text-mint">
                     {site.phone}
+                  </a>
+                </li>
+                <li>
+                  <a {...whatsappLink} className="transition-colors hover:text-mint">
+                    Book on WhatsApp
+                  </a>
+                </li>
+                <li>
+                  <a href={site.emailHref} className="break-all transition-colors hover:text-mint">
+                    {site.email}
                   </a>
                 </li>
                 <li>{site.location}</li>

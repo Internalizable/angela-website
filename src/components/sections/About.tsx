@@ -3,36 +3,38 @@ import Eyebrow from "../ui/Eyebrow";
 import Reveal from "../ui/Reveal";
 import { Pin, Screen, Leaf } from "../ui/Icon";
 import { credentials, site } from "../../site";
+import portrait from "../../assets/angela-cutout.webp";
 
 export default function About() {
   return (
     <Section id="about" className="bg-cream">
       <div className="grid grid-cols-1 items-center gap-[clamp(2rem,5vw,4.5rem)] md:grid-cols-[0.92fr_1.08fr]">
-        {/* identity card */}
+        {/* portrait — the cutout sits flush with the blob's base so the
+            photo's cropped hem reads as an intentional edge */}
         <Reveal className="relative">
-          <div className="relative overflow-hidden rounded-blob p-[clamp(20px,3vw,34px)] shadow-float [background:radial-gradient(120%_120%_at_20%_10%,var(--color-mint-soft),transparent_55%),linear-gradient(160deg,#f2f7ec,#e3eed9)]">
-            <div className="relative z-[2] rounded-[30px] bg-card p-[clamp(22px,3vw,34px)] shadow-soft">
-              <div className="grid h-[78px] w-[78px] place-items-center rounded-full bg-gradient-to-br from-sage to-forest font-display text-3xl text-cream shadow-soft">
-                A
-              </div>
-              <h3 className="mt-4 text-2xl font-semibold">{site.name}</h3>
-              <p className="mt-1 text-[0.92rem] font-bold text-sage-ink">{site.role}</p>
-              <ul className="mt-6 grid gap-2.5">
-                <li className="flex items-center gap-2.5 text-[0.96rem] text-ink-soft">
-                  <Pin size={20} className="shrink-0 text-sage" /> {site.location}
-                </li>
-                <li className="flex items-center gap-2.5 text-[0.96rem] text-ink-soft">
-                  <Screen size={20} className="shrink-0 text-sage" /> {site.modes} sessions
-                </li>
-                <li className="flex items-center gap-2.5 text-[0.96rem] text-ink-soft">
-                  <Leaf size={20} className="shrink-0 text-sage" /> Instructor of Psychology, AUB
-                </li>
-              </ul>
-            </div>
-            <span className="absolute -right-1.5 bottom-6 z-[3] rotate-[4deg] rounded-full bg-honey px-4 py-2.5 text-[0.82rem] font-extrabold text-honey-ink shadow-float">
-              Now accepting new clients
-            </span>
+          <div className="relative overflow-hidden rounded-blob shadow-float [background:radial-gradient(120%_120%_at_20%_10%,var(--color-mint-soft),transparent_55%),linear-gradient(160deg,#f2f7ec,#e3eed9)]">
+            <span
+              aria-hidden="true"
+              className="absolute left-1/2 top-[10%] h-[64%] w-[80%] -translate-x-1/2 rounded-full bg-white/50 blur-3xl"
+            />
+            <img
+              src={portrait}
+              alt={`${site.name}, ${site.role.toLowerCase()}`}
+              width={1086}
+              height={1400}
+              className="relative z-[1] mx-auto block w-full max-w-[440px]"
+            />
+            <div className="grain pointer-events-none absolute inset-0 z-[2] opacity-40 mix-blend-soft-light" />
           </div>
+
+          <div className="absolute bottom-6 left-2 z-[3] max-w-[15rem] rounded-[22px] bg-card/90 px-5 py-4 shadow-float backdrop-blur-md sm:left-6">
+            <b className="block font-display text-[1.15rem] leading-tight text-forest">{site.name}</b>
+            <span className="mt-1 block text-[0.82rem] font-bold text-sage-ink">{site.role}</span>
+          </div>
+
+          <span className="absolute -right-1.5 top-8 z-[3] rotate-[4deg] rounded-full bg-honey px-4 py-2.5 text-[0.82rem] font-extrabold text-honey-ink shadow-float">
+            Now accepting new clients
+          </span>
         </Reveal>
 
         {/* bio */}
@@ -59,7 +61,20 @@ export default function About() {
             </p>
           </Reveal>
 
-          <Reveal delay={140} className="mt-8 flex flex-wrap gap-2.5">
+          {/* practice facts that used to live on the identity card */}
+          <Reveal delay={110} className="mt-7 grid gap-3 sm:grid-cols-3">
+            <span className="flex items-center gap-2.5 text-[0.95rem] text-ink-soft">
+              <Pin size={20} className="shrink-0 text-sage" /> {site.location}
+            </span>
+            <span className="flex items-center gap-2.5 text-[0.95rem] text-ink-soft">
+              <Screen size={20} className="shrink-0 text-sage" /> {site.modes}
+            </span>
+            <span className="flex items-center gap-2.5 text-[0.95rem] text-ink-soft">
+              <Leaf size={20} className="shrink-0 text-sage" /> Instructor, AUB
+            </span>
+          </Reveal>
+
+          <Reveal delay={160} className="mt-8 flex flex-wrap gap-2.5">
             {credentials.map((c) => (
               <span
                 key={c.school}

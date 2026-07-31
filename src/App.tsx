@@ -5,6 +5,7 @@ import About from "./components/sections/About";
 import Audiences from "./components/sections/Audiences";
 import Process from "./components/sections/Process";
 import Focus from "./components/sections/Focus";
+import Training from "./components/sections/Training";
 import Booking from "./components/sections/Booking";
 import Footer from "./components/sections/Footer";
 
@@ -25,6 +26,7 @@ export default function App() {
         <Audiences />
         <Process />
         <Focus />
+        <Training />
         <Booking />
       </main>
       <Footer />

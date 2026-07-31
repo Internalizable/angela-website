@@ -1,9 +1,9 @@
 import Wordmark from "../brand/Wordmark";
 import Button from "../ui/Button";
-import { Calendar } from "../ui/Icon";
+import { WhatsApp } from "../ui/Icon";
 import { useScrollHeader } from "../../hooks/useScrollHeader";
 import { nav, site } from "../../site";
-import { openCalendlyPopup } from "../../lib/calendly";
+import { whatsappLink } from "../../lib/whatsapp";
 
 /* Contextual header: solidifies on scroll, hides on the way down,
    returns the moment you scroll back up. */
@@ -42,8 +42,8 @@ export default function Nav() {
           <a href={site.phoneHref} className="hidden text-[0.95rem] font-semibold text-forest tabular-nums lg:inline">
             {site.phone}
           </a>
-          <Button onClick={() => openCalendlyPopup(site.calendlyUrl)} aria-label="Book a session with Angela">
-            <Calendar size={18} />
+          <Button as="a" {...whatsappLink} aria-label="Book a session with Angela on WhatsApp">
+            <WhatsApp size={18} />
             Book<span className="hidden sm:inline">&nbsp;a session</span>
           </Button>
         </div>
