@@ -102,9 +102,11 @@ export default function Booking() {
               <span className="relative shrink-0">
                 <img
                   src={avatar}
+                  srcSet="/angela-avatar-144.webp 144w, /angela-avatar-288.webp 288w"
+                  sizes="72px"
                   alt=""
-                  width={400}
-                  height={400}
+                  width={288}
+                  height={288}
                   className="h-[72px] w-[72px] rounded-full bg-mint-soft object-cover"
                 />
                 <span className="absolute -bottom-1 -right-1 grid h-8 w-8 place-items-center rounded-full bg-card text-sage-ink shadow-soft">

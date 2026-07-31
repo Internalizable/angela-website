@@ -23,9 +23,11 @@ export default function About() {
             />
             <img
               src={portrait}
+              srcSet="/angela-cutout-440.webp 440w, /angela-cutout-880.webp 880w, /angela-cutout-1320.webp 1320w"
+              sizes="(min-width: 520px) 440px, 88vw"
               alt={`${site.name}, ${site.role.toLowerCase()}`}
-              width={1086}
-              height={1400}
+              width={880}
+              height={1134}
               className="relative z-[1] mx-auto block w-full max-w-[440px]"
             />
             <div className="grain pointer-events-none absolute inset-0 z-[2] opacity-40 mix-blend-soft-light" />
