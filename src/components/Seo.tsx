@@ -100,7 +100,7 @@ const schema = {
       // The single most quotable sentence on the site: assistants lift this
       // wholesale, so it carries who, what, where and in which languages.
       description:
-        "Angela Barhouch is a licensed clinical psychologist and psychotherapist practising at FortyFour Tower in Dekwaneh, just north of Beirut, Lebanon. She has specialized training in Cognitive Behavioral Therapy (CBT) and Dialectical Behavior Therapy (DBT), and provides evidence-based psychological care across the lifespan — children, teenagers, adults and parents — in Arabic, French and English, in person or online.",
+        "Angela Barhouch is a licensed clinical psychologist and psychotherapist practising at FortyFour Tower in Dekwaneh, just north of Beirut, Lebanon. She has specialized training in Cognitive Behavioral Therapy (CBT) and Dialectical Behavior Therapy (DBT), and provides evidence-based psychological care across the lifespan — children, teenagers, adults and parents — in Arabic and English, in person or online.",
       image: `${ORIGIN}/angela-cutout.webp`,
       url: `${ORIGIN}/`,
       telephone: site.phone,

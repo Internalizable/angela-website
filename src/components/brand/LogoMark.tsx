@@ -1,42 +1,47 @@
-/* The brand mark from the primary logo: two overlapping speech bubbles that
-   together read as a couch — conversation + a safe place to sit.
-   Outlined version, themeable via the `tone` props. */
+/* The brand mark: a couch and a floor lamp — the therapy room itself.
+   Two planes of depth, outlined lamp behind and filled couch in front,
+   themeable via the colour props. Shapes are laid out on a shared floor
+   line at y=83 so the pair reads as one scene at small sizes. */
 type Props = {
   className?: string;
-  back?: string;
-  front?: string;
-  dots?: string;
+  lamp?: string;
+  lampFill?: string;
+  couch?: string;
+  couchFill?: string;
   title?: string;
 };
 
 export default function LogoMark({
   className,
-  back = "var(--color-mint)",
-  front = "var(--color-sage)",
-  dots = "var(--color-forest)",
+  lamp = "var(--color-mint)",
+  lampFill = "var(--color-mint-soft)",
+  couch = "var(--color-sage)",
+  couchFill = "var(--color-cream)",
   title = "Angela Barhouch",
 }: Props) {
   return (
     <svg viewBox="0 0 100 100" className={className} role="img" aria-label={title}>
-      {/* back bubble (couch back) */}
-      <path
-        d="M22 22h38a11 11 0 0 1 11 11v16a11 11 0 0 1-11 11H37l-10 9 1.6-9H22a11 11 0 0 1-11-11V33a11 11 0 0 1 11-11Z"
+      {/* floor lamp */}
+      <g
         fill="none"
-        stroke={back}
+        stroke={lamp}
         strokeWidth={4}
+        strokeLinecap="round"
         strokeLinejoin="round"
-      />
-      {/* front bubble (couch seat) */}
-      <path
-        d="M46 40h32a11 11 0 0 1 11 11v13a11 11 0 0 1-11 11h-7l1.6 8-8.6-8H46a11 11 0 0 1-11-11V51a11 11 0 0 1 11-11Z"
-        fill="var(--color-cream)"
-        stroke={front}
-        strokeWidth={4}
-        strokeLinejoin="round"
-      />
-      <circle cx="54" cy="57" r="2.6" fill={dots} />
-      <circle cx="62" cy="57" r="2.6" fill={dots} />
-      <circle cx="70" cy="57" r="2.6" fill={dots} />
+      >
+        <path d="M7 37 13.5 17h13L33 37Z" fill={lampFill} />
+        <path d="M20 37v46" />
+        <path d="M12 83h16" />
+      </g>
+
+      {/* couch — backrest, then seat over it, then arms on top */}
+      <g stroke={couch} strokeWidth={4} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="46" y="44" width="40" height="24" rx="8" fill={couchFill} />
+        <rect x="38" y="60" width="56" height="18" rx="8" fill={couchFill} />
+        <rect x="38" y="52" width="12" height="26" rx="6" fill={couchFill} />
+        <rect x="82" y="52" width="12" height="26" rx="6" fill={couchFill} />
+        <path d="M46 78v5M86 78v5" fill="none" />
+      </g>
     </svg>
   );
 }

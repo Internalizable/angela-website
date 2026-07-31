@@ -90,7 +90,9 @@ export default function Booking() {
                 <b className="block font-bold text-forest">
                   {site.languages.map((l) => l.label).join(" · ")}
                 </b>
-                <span className="text-[0.9rem] text-ink-mute">Sessions in any of the three</span>
+                <span className="text-[0.9rem] text-ink-mute">
+                  Sessions in {site.languages.length > 2 ? "any of them" : "either"}
+                </span>
               </span>
             </div>
           </div>

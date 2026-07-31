@@ -29,12 +29,11 @@ export const site = {
   googleMapsUrl: "https://maps.google.com/?cid=16914040843746171916",
 
   /* Consultation languages. Worth surfacing prominently: "Arabic speaking
-     psychologist" and "French speaking therapist" are distinct, high-intent
-     searches in Lebanon. BCP-47 codes feed structured data. */
+     psychologist" is a distinct, high-intent search in Lebanon. BCP-47 codes
+     feed structured data. */
   languages: [
     { code: "en", label: "English" },
     { code: "ar", label: "Arabic" },
-    { code: "fr", label: "French" },
   ],
 
   /* Mirrors the Google Business Profile hours exactly. */
@@ -345,8 +344,8 @@ export const faqs = [
     a: "Yes. Everything shared in session is protected by professional ethical standards. For teenagers, sessions are confidential by design and parents are contacted only in an emergency, or when there is a risk to the teenager's safety or someone else's.",
   },
   {
-    q: "Do you offer therapy in Arabic or French?",
-    a: "Yes. Angela Barhouch works in Arabic, French and English, and sessions can be held in whichever of the three you are most comfortable thinking and feeling in. You can also mix languages within a session.",
+    q: "Do you offer therapy in Arabic?",
+    a: "Yes. Angela Barhouch works in Arabic and English, and sessions can be held in whichever of the two you are most comfortable thinking and feeling in. You can also move between the two within a session.",
   },
   {
     q: "What are your opening hours?",
