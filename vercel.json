@@ -2,7 +2,6 @@
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
   "headers": [
     {
-      "comment": "index.html names the hashed chunks, so it must never be held in a cache. A stale copy asks for chunks that no longer exist, and the SPA rewrite answers those with HTML.",
       "source": "/",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
     },
