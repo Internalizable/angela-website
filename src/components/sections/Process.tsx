@@ -72,7 +72,7 @@ export default function Process() {
         </div>
       ))}
 
-      {/* Therapy isn't a three-session package — say so plainly. */}
+      {/* The three cards are the opening sessions, not the whole course. */}
       <Reveal delay={280}>
         <p className="mt-8 max-w-[62ch] text-[0.98rem] text-on-dark-soft">
           <b className="font-display text-cream">Therapy continues from there.</b> These are the opening sessions, not

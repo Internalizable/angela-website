@@ -58,8 +58,8 @@ All copy and settings a non-developer might change live in **`src/site.ts`**:
   scheduler and no free consultation: booking is a direct conversation.
 - `phone`, `email`, `location`, `modes` — contact details
 - audiences, therapy process tracks, focus areas, credentials, values
-- `trainingStats` / `trainingPathways` — figures transcribed from Angela's CBT
-  letter of completion. The awarding body is intentionally not named on the site
+- `trainingCertifications` — the CBT trainings and certifications Angela has
+  completed. The awarding body is intentionally not named on the site
 
 ## Portrait assets
 

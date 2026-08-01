@@ -2,7 +2,7 @@ import { Section, SectionHead } from "../ui/Section";
 import Reveal from "../ui/Reveal";
 import Button from "../ui/Button";
 import { Spark, WhatsApp, ArrowRight } from "../ui/Icon";
-import { trainingProgramme, trainingStats, trainingPathways, trainingOffers } from "../../site";
+import { trainingProgramme, trainingCertifications, trainingOffers } from "../../site";
 import { whatsappLink } from "../../lib/whatsapp";
 
 /* Two halves: the accredited training Angela completed (the credibility
@@ -17,7 +17,7 @@ export default function Training() {
             Trained deeply, so the room is <span className="italic font-medium text-sage">never improvised</span>.
           </>
         }
-        intro="Accredited CBT training across complex cases, children and adolescents, and supervision — completed with high distinction."
+        intro="Accredited CBT training across complex cases, children and adolescents, and supervision."
       />
 
       <div className="grid grid-cols-1 gap-[clamp(1.5rem,3vw,2.5rem)] lg:grid-cols-[1.05fr_0.95fr]">
@@ -25,29 +25,19 @@ export default function Training() {
         <Reveal>
           <div className="flex h-full flex-col rounded-[30px] bg-forest p-[clamp(1.6rem,3.5vw,2.6rem)] text-on-dark shadow-float">
             <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-mint">
-              <Spark size={14} /> Letter of completion
+              <Spark size={14} /> Trainings and certifications
             </span>
             <h3 className="mt-4 text-[1.5rem] font-semibold text-cream">{trainingProgramme}</h3>
 
-            <dl className="mt-7 grid gap-5 sm:grid-cols-3">
-              {trainingStats.map((s) => (
-                <div key={s.label}>
-                  <dd className="font-display text-[1.7rem] leading-tight text-mint">{s.value}</dd>
-                  <dt className="mt-1 text-[0.84rem] text-on-dark-soft">{s.label}</dt>
-                </div>
-              ))}
-            </dl>
-
-            <div className="mt-8 grid gap-5 border-t border-white/10 pt-7">
-              {trainingPathways.map((p) => (
-                <div key={p.title}>
-                  <span className="text-[0.75rem] font-bold uppercase tracking-[0.14em] text-honey">{p.tag}</span>
-                  <h4 className="mt-1 text-[1.1rem] font-semibold text-cream">{p.title}</h4>
-                  <ul className="mt-2.5 flex flex-wrap gap-1.5">
-                    {p.items.map((item) => (
+            <div className="mt-7 grid gap-6 border-t border-white/10 pt-7">
+              {trainingCertifications.map((c) => (
+                <div key={c.title}>
+                  <h4 className="text-[1.1rem] font-semibold text-cream">{c.title}</h4>
+                  <ul className="mt-2.5 grid gap-1.5">
+                    {c.items.map((item) => (
                       <li
                         key={item}
-                        className="rounded-full border border-white/12 bg-white/[0.06] px-3 py-1.5 text-[0.84rem] text-on-dark-soft"
+                        className="relative pl-5 text-[0.92rem] text-on-dark-soft before:absolute before:left-0 before:top-[0.62em] before:h-1.5 before:w-1.5 before:rounded-full before:bg-honey"
                       >
                         {item}
                       </li>

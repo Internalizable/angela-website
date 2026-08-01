@@ -7,7 +7,13 @@ import { whatsappLink } from "../../lib/whatsapp";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 // 3D scene is heavy + browser-only — load it after the rest of the hero paints.
-const CouchScene = lazy(() => import("../three/CouchScene"));
+/* The chunk hash changes every deploy, so a tab left open across a deploy asks
+   for a file that no longer exists — and the SPA rewrite answers with
+   index.html, which fails MIME checking. The scene is decorative, so swallow
+   that and render nothing rather than letting it tear down the whole app. */
+const CouchScene = lazy(() =>
+  import("../three/CouchScene").catch(() => ({ default: () => <></> })),
+);
 
 /* Small glassy labels that frame the couch and name what therapy is for —
    so the right side reads clearly as "psychology", not empty space. */

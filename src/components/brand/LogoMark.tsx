@@ -1,46 +1,28 @@
-/* The brand mark: a couch and a floor lamp — the therapy room itself.
-   Two planes of depth, outlined lamp behind and filled couch in front,
-   themeable via the colour props. Shapes are laid out on a shared floor
-   line at y=83 so the pair reads as one scene at small sizes. */
+/* The primary brand mark: two overlapping speech bubbles that read as a sofa —
+   conversation and a safe place to sit. Path is the artwork itself, extracted
+   from Angela Barhouch_Primary Logo.pdf, so it matches the printed identity
+   exactly rather than being redrawn by eye. Single colour by design. */
 type Props = {
   className?: string;
-  lamp?: string;
-  lampFill?: string;
-  couch?: string;
-  couchFill?: string;
+  color?: string;
   title?: string;
 };
 
 export default function LogoMark({
   className,
-  lamp = "var(--color-mint)",
-  lampFill = "var(--color-mint-soft)",
-  couch = "var(--color-sage)",
-  couchFill = "var(--color-cream)",
+  color = "var(--color-mint)",
   title = "Angela Barhouch",
 }: Props) {
   return (
-    <svg viewBox="0 0 100 100" className={className} role="img" aria-label={title}>
-      {/* floor lamp */}
-      <g
-        fill="none"
-        stroke={lamp}
-        strokeWidth={4}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M7 37 13.5 17h13L33 37Z" fill={lampFill} />
-        <path d="M20 37v46" />
-        <path d="M12 83h16" />
-      </g>
-
-      {/* couch — backrest, then seat over it, then arms on top */}
-      <g stroke={couch} strokeWidth={4} strokeLinecap="round" strokeLinejoin="round">
-        <rect x="46" y="44" width="40" height="24" rx="8" fill={couchFill} />
-        <rect x="38" y="60" width="56" height="18" rx="8" fill={couchFill} />
-        <rect x="38" y="52" width="12" height="26" rx="6" fill={couchFill} />
-        <rect x="82" y="52" width="12" height="26" rx="6" fill={couchFill} />
-        <path d="M46 78v5M86 78v5" fill="none" />
+    <svg
+      viewBox="0 0 273.8 170.1"
+      className={className}
+      role="img"
+      aria-label={title}
+      fill={color}
+    >
+      <g transform="translate(-429.9 -21.6)">
+        <path fillRule="evenodd" d="M 696.41 86.09 L 684.55 148.56 C 683.27 155.29 677.36 160.18 670.50 160.18 L 663.19 160.18 C 661.52 160.18 659.91 160.89 658.77 162.11 C 657.63 163.34 657.05 165.00 657.17 166.68 L 658.38 182.55 L 638.63 162.04 C 637.50 160.86 635.91 160.18 634.28 160.18 L 499.97 160.18 C 507.42 148.14 510.94 135.70 512.44 128.88 C 512.78 127.34 514.11 126.27 515.68 126.27 L 645.18 126.27 C 652.00 126.27 657.68 121.15 658.40 114.37 L 663.29 67.97 L 681.41 67.97 C 685.98 67.97 690.26 69.99 693.17 73.50 C 696.08 77.02 697.26 81.61 696.41 86.09 M 472.16 181.63 C 472.86 178.02 473.78 172.88 474.70 166.43 L 486.79 166.43 Z M 463.92 160.18 C 457.14 160.18 451.25 155.36 449.91 148.72 L 437.34 86.26 C 436.43 81.75 437.58 77.12 440.50 73.57 C 443.41 70.01 447.71 67.97 452.30 67.97 L 471.05 67.97 C 474.20 107.04 471.91 139.27 469.25 160.18 Z M 475.53 160.18 C 478.19 138.97 480.40 106.80 477.31 67.97 L 657.00 67.97 L 652.18 113.71 C 651.81 117.31 648.79 120.02 645.18 120.02 L 515.68 120.02 C 511.15 120.02 507.31 123.11 506.34 127.54 C 504.79 134.57 500.95 147.97 492.5 160.18 Z M 475.22 47.30 C 474.54 41.84 475.71 37.37 478.70 34.00 C 482.12 30.12 487.89 27.89 494.5 27.89 L 639.82 27.89 C 645.28 27.89 650.50 30.21 654.14 34.27 C 657.79 38.32 659.55 43.75 658.98 49.18 L 657.66 61.73 L 476.77 61.73 C 476.34 57.00 475.83 52.20 475.22 47.30 M 697.98 69.52 C 693.88 64.57 687.84 61.73 681.41 61.73 L 663.94 61.73 L 665.20 49.83 C 665.95 42.65 663.61 35.45 658.78 30.09 C 653.95 24.72 647.04 21.64 639.82 21.64 L 494.5 21.64 C 486.10 21.64 478.63 24.64 474.02 29.86 C 469.86 34.56 468.13 40.86 469.02 48.06 C 469.59 52.70 470.08 57.25 470.50 61.73 L 452.30 61.73 C 445.83 61.73 439.77 64.60 435.66 69.61 C 431.56 74.62 429.94 81.14 431.22 87.49 L 443.80 149.95 C 445.71 159.5 454.18 166.43 463.92 166.43 L 468.39 166.43 C 466.57 179.02 464.82 186.14 464.77 186.34 C 464.73 186.51 464.70 186.69 464.68 186.87 C 464.54 188.80 465.59 190.55 467.35 191.33 C 467.95 191.61 468.59 191.74 469.21 191.74 C 470.41 191.74 471.57 191.25 472.45 190.34 L 495.46 166.43 L 634.19 166.43 L 657.20 190.33 C 658.07 191.25 659.24 191.74 660.45 191.74 C 661.06 191.74 661.70 191.61 662.29 191.34 C 664.06 190.55 665.11 188.80 664.97 186.86 L 663.19 166.43 L 670.50 166.43 C 680.36 166.43 688.84 159.41 690.68 149.72 L 702.55 87.25 C 703.75 80.93 702.08 74.47 697.98 69.52" />
       </g>
     </svg>
   );

@@ -10,7 +10,8 @@ type Props = {
 export default function Wordmark({ className = "", onDark = false }: Props) {
   return (
     <a href="#top" className={`inline-flex items-center gap-2.5 ${className}`} aria-label="Angela Barhouch — home">
-      <LogoMark className="h-10 w-10 shrink-0" />
+      {/* the mark is 1.61:1, so size by height and let width follow */}
+      <LogoMark className="h-8 w-auto shrink-0" color={onDark ? "var(--color-mint)" : "var(--color-sage)"} />
       <span className="flex flex-col leading-none">
         <span className={`font-display text-[1.18rem] tracking-tight ${onDark ? "text-cream" : "text-forest"}`}>
           <span className="italic font-medium">Angela</span> Barhouch

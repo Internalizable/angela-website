@@ -243,21 +243,14 @@ export const focusAreas = [
 ];
 
 /* ------------------------------------------------------------------
-   Accredited CBT training. Figures below are taken straight from
-   Angela's letter of completion; update here if it's ever reissued.
+   Accredited CBT training Angela has completed. Content is taken
+   straight from her certification; update here if it's ever reissued.
    The awarding body is deliberately not named on the site.
    ------------------------------------------------------------------ */
 export const trainingProgramme = "Accredited CBT Psychotherapy & Training Programme";
 
-export const trainingStats = [
-  { value: "2,432", label: "Total training hours" },
-  { value: "1,350", label: "Supervision hours" },
-  { value: "High Distinction", label: "Final award" },
-];
-
-export const trainingPathways = [
+export const trainingCertifications = [
   {
-    tag: "Pathway I",
     title: "CBT for Complex Cases",
     items: [
       "Personality disorders",
@@ -267,7 +260,6 @@ export const trainingPathways = [
     ],
   },
   {
-    tag: "Pathway II",
     title: "CBT for Children & Adolescents",
     items: [
       "Adjusting CBT for children",
@@ -278,7 +270,6 @@ export const trainingPathways = [
     ],
   },
   {
-    tag: "Pathway III",
     title: "CBT for Trainers & Supervisors",
     items: [
       "CBT supervision & group supervision",
@@ -317,7 +308,7 @@ export const faqs = [
   },
   {
     q: "Do you offer a free consultation or intro call?",
-    a: "No. There is no free intro call. Therapy begins with a full first session — a complete clinical assessment — so the work starts from the very first hour.",
+    a: "Questions before booking are welcome on WhatsApp. Message Angela with who the session is for and what's going on, and she'll answer what you need to know, explain how she works, and confirm the fee — at no cost. Rather than a separate intro call, therapy itself begins with a full first session, a complete clinical assessment, so the work starts from the very first hour.",
   },
   {
     q: "How do I book a therapy session?",
@@ -337,7 +328,7 @@ export const faqs = [
   },
   {
     q: "How many therapy sessions will I need?",
-    a: "Session 1 is a full assessment and session 2 covers psychoeducation and case formulation. From session 3 onward the treatment plan begins and therapy continues for as long as your goals need, reviewed together as you progress. It is not a fixed three-session package.",
+    a: "Session 1 is a full assessment and session 2 covers psychoeducation and case formulation. From session 3 onward the treatment plan begins and therapy continues for as long as your goals need, reviewed together as you progress.",
   },
   {
     q: "Is therapy confidential?",
