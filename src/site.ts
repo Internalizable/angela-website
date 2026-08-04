@@ -34,6 +34,7 @@ export const site = {
      name. Only add profiles that are unambiguously hers; a wrong URL here
      asserts a false identity claim rather than a harmless dead link. */
   profiles: [
+    "https://aub.edu/pages/profile.aspx?MemberId=ab174",
     "https://www.linkedin.com/in/angela-barhouch-8420631a1/",
     "https://www.instagram.com/angela.barhouch/",
   ],
