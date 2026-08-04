@@ -6,9 +6,9 @@ const WORDS = [
   "Emotional regulation",
   "Trauma",
   "Parenting",
-  "Identity",
+  "Self-confidence",
   "Mood",
-  "Resilience",
+  "Stress management",
 ];
 
 export default function Marquee() {

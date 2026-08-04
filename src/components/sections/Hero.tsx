@@ -92,8 +92,9 @@ export default function Hero() {
             data-anim
             className="mt-6 max-w-[44ch] text-[1.05rem] text-ink-soft opacity-0 animate-fade-up [animation-delay:0.42s]"
           >
-            Practical, evidence-based therapy for children, teens, adults and parents — in person in Beirut, Lebanon,
-            or online wherever you are. Plus training and workshops for schools, teams and NGOs.
+            I am a licensed psychologist and psychotherapist. Practical, evidence-based therapy for children, teens,
+            adults, and parents—available in person in Beirut, Lebanon, or online wherever you are. I also provide
+            training and workshops for schools, organizations, NGOs, and professional teams.
           </p>
 
           <div data-anim className="mt-8 flex flex-wrap gap-3.5 opacity-0 animate-fade-up [animation-delay:0.56s]">

@@ -64,8 +64,8 @@ export default function About() {
               emotional difficulties.
             </p>
             <p>
-              Alongside my clinical practice, I teach psychology at the American University of Beirut, integrating the
-              latest psychological research into compassionate, evidence-based care.
+              Alongside my clinical practice, I am a psychology instructor at AUB, integrating the latest
+              psychological research into compassionate, evidence-based care.
             </p>
           </Reveal>
 
