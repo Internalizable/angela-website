@@ -36,7 +36,7 @@ const schema = {
         { "@type": "AdministrativeArea", name: "Mount Lebanon Governorate" },
       ],
       hasMap: site.googleMapsUrl,
-      sameAs: [site.googleMapsUrl],
+      sameAs: [site.googleMapsUrl, ...site.profiles],
       founder: { "@id": `${ORIGIN}/#angela` },
       employee: { "@id": `${ORIGIN}/#angela` },
       medicalSpecialty: "Psychiatric",
@@ -103,6 +103,9 @@ const schema = {
         "Angela Barhouch is a licensed clinical psychologist and psychotherapist practising at FortyFour Tower in Dekwaneh, just north of Beirut, Lebanon. She has specialized training in Cognitive Behavioral Therapy (CBT) and Dialectical Behavior Therapy (DBT), and provides evidence-based psychological care across the lifespan — children, teenagers, adults and parents — in Arabic and English, in person or online.",
       image: `${ORIGIN}/angela-cutout.webp`,
       url: `${ORIGIN}/`,
+      // The profiles Google already ranks for this name. On the Person rather
+      // than only the practice, because it's the person those accounts are.
+      sameAs: site.profiles,
       telephone: site.phone,
       email: site.email,
       worksFor: { "@id": `${ORIGIN}/#practice` },

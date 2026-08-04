@@ -28,6 +28,16 @@ export const site = {
      Linking site <-> profile ties the two entities together for Google. */
   googleMapsUrl: "https://maps.google.com/?cid=16914040843746171916",
 
+  /* Profiles that already rank for "Angela Barhouch". They feed sameAs, which
+     is how the graph states this domain and those accounts are one person —
+     the association a new domain has to earn before it ranks for its own
+     name. Only add profiles that are unambiguously hers; a wrong URL here
+     asserts a false identity claim rather than a harmless dead link. */
+  profiles: [
+    "https://www.linkedin.com/in/angela-barhouch-8420631a1/",
+    "https://www.instagram.com/angela.barhouch/",
+  ],
+
   /* Consultation languages. Worth surfacing prominently: "Arabic speaking
      psychologist" is a distinct, high-intent search in Lebanon. BCP-47 codes
      feed structured data. */
