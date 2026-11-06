@@ -44,6 +44,8 @@
   /* Type */
   --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
   --font-body: "Mulish", "Inter", system-ui, -apple-system, sans-serif;
+  --font-arabic: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-arabic-display: "Noto Naskh Arabic", "IBM Plex Sans Arabic", serif;
 
   /* Motion */
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
@@ -139,6 +141,18 @@
     line-height: 1.05;
     text-wrap: balance;
     color: var(--color-forest);
+  }
+  /* Arabic letters join, so any letter-spacing visibly breaks the script. */
+  :lang(ar),
+  :lang(ar) * {
+    font-family: var(--font-arabic);
+    letter-spacing: 0 !important;
+  }
+  :lang(ar) h1,
+  :lang(ar) h2,
+  :lang(ar) h3 {
+    font-family: var(--font-arabic-display);
+    line-height: 1.3;
   }
   :focus-visible {
     outline: 3px solid var(--color-sage-ink);

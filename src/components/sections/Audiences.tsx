@@ -19,7 +19,8 @@ export default function Audiences() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {audiences.map((a, i) => (
           <Reveal key={a.title} delay={i * 80}>
-            <article
+            <a
+              href={a.href}
               className="group relative isolate flex h-full items-center gap-3.5 overflow-hidden rounded-[20px] p-4 transition-[transform,box-shadow] duration-500 ease-spring hover:-translate-y-1 hover:shadow-float"
               style={{ background: a.tint }}
             >
@@ -39,7 +40,7 @@ export default function Audiences() {
                 />
               </span>
               <h3 className="text-[1.05rem] font-semibold leading-tight">{a.title}</h3>
-            </article>
+            </a>
           </Reveal>
         ))}
       </div>

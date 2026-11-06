@@ -3,11 +3,64 @@
    Everything a non-developer might want to tweak lives here.
    ------------------------------------------------------------------ */
 
+/* Every URL on the site. Links and page definitions read from here, so a slug
+   can only be changed in one place. */
+export const paths = {
+  home: "/",
+  about: "/about",
+  arabic: "/ar",
+  cbt: "/cbt-therapy-beirut",
+  dbt: "/dbt-therapy-beirut",
+  online: "/online-therapy-lebanon",
+  arabicSpeaking: "/arabic-speaking-psychologist",
+  anxiety: "/anxiety-therapy-beirut",
+  depression: "/depression-therapy-beirut",
+  adhd: "/adhd-therapy-beirut",
+  autism: "/autism-support-beirut",
+  trauma: "/trauma-ptsd-therapy-beirut",
+  personality: "/personality-disorder-therapy-beirut",
+  children: "/child-therapy-beirut",
+  teens: "/teen-therapy-beirut",
+  adults: "/adult-therapy-beirut",
+  parents: "/parent-coaching-beirut",
+  corporate: "/corporate-training-lebanon",
+  schools: "/school-ngo-training-lebanon",
+  supervision: "/clinical-supervision-lebanon",
+  chooseGuide: "/how-to-choose-a-psychologist-lebanon",
+} as const;
+
 export const site = {
   name: "Angela Barhouch",
+  /* Spelling as it appears on the Ministry of Public Health register. */
+  nameAr: "أنجيلا برهوش",
+  /* Name forms used on her official registrations. They go into alternateName
+     so assistants can connect this site to those records. */
+  registeredNames: ["Angela Issam Barhouch", "Angela Isam Barhouch"],
   role: "Licensed Clinical Psychologist & Psychotherapist",
   credential: "CBT & DBT Trained",
   location: "Beirut, Lebanon",
+
+  /* Drives sitemap lastmod, dateModified and the visible "last updated" line.
+     Change it when the copy actually changes, not on every deploy: a date that
+     moves without a real edit is a false freshness signal. */
+  contentUpdated: "2026-11-06",
+
+  /* Set to the ISO date Angela reviewed the clinical pages. While null, the
+     site makes no "clinically reviewed" claim, visibly or in structured data,
+     and the build prints a reminder. */
+  clinicalReviewDate: null as string | null,
+
+  /* Independently verifiable registration: the strongest trust signal the site
+     has. Both records are public; Ministry Circular 113 also urges licence
+     holders to display their licence. */
+  licence: {
+    number: "2021/3/20888",
+    category: "Clinical",
+    mophListUrl: "https://www.moph.gov.lb/en/Pages/0/40798/list-licensed-clinical-psychologists",
+    orderName: "Order of Psychologists in Lebanon",
+    orderUrl: "https://lopsy.org",
+    orderProfileUrl: "https://lopsy.org/member/11066",
+  },
 
   /* Must match the Google Business Profile character for character — name,
      address and phone consistency between the site and GBP is foundational
@@ -22,6 +75,10 @@ export const site = {
     area: "Greater Beirut",
   },
 
+  /* The tower's published position. Compare with the Google Business Profile
+     pin if that listing is ever moved. */
+  geo: { latitude: 33.8805, longitude: 35.5422 },
+
   /* Canonical Google Maps listing, by CID. Decoded from the listing's own
      geocode (FID 0x151f179dadb73797:0xeababe886ff05c0c) rather than copied
      from a share URL, so it carries no session tokens and won't rot.
@@ -34,7 +91,8 @@ export const site = {
      name. Only add profiles that are unambiguously hers; a wrong URL here
      asserts a false identity claim rather than a harmless dead link. */
   profiles: [
-    "https://aub.edu/pages/profile.aspx?MemberId=ab174",
+    "https://lopsy.org/member/11066",
+    "https://www.aub.edu.lb/pages/profile.aspx?MemberId=ab174",
     "https://www.linkedin.com/in/angela-barhouch-8420631a1/",
     "https://www.instagram.com/angela.barhouch/",
   ],
@@ -77,17 +135,63 @@ export const site = {
   whatsappUrl: "https://wa.me/message/GKBJIIJAJNRJJ1",
 } as const;
 
+/* Absolute paths so the same header works from every page: on the homepage the
+   browser treats these as same-page jumps, elsewhere they load the homepage. */
 export const nav = [
-  { label: "About", href: "#about" },
-  { label: "Who I help", href: "#who" },
-  { label: "How it works", href: "#process" },
-  { label: "Focus", href: "#focus" },
-  { label: "Training", href: "#training" },
-  { label: "Book", href: "#book" },
+  { label: "About", href: "/#about" },
+  { label: "Who I help", href: "/#who" },
+  { label: "How it works", href: "/#process" },
+  { label: "Focus", href: "/#focus" },
+  { label: "Training", href: "/#training" },
+  { label: "Book", href: "/#book" },
 ];
 
-/* The header nav is already at its width limit, so FAQ lives in the footer. */
-export const footerNav = [...nav.slice(0, -1), { label: "FAQ", href: "#faq" }, nav[nav.length - 1]];
+/* The footer is the one place that links to every page, which is what lets
+   crawlers reach them all and assistants see what the practice covers. */
+export const footerGroups = [
+  {
+    title: "Therapy",
+    links: [
+      { label: "CBT therapy", href: paths.cbt },
+      { label: "DBT therapy", href: paths.dbt },
+      { label: "Online therapy", href: paths.online },
+      { label: "Therapy in Arabic", href: paths.arabicSpeaking },
+    ],
+  },
+  {
+    title: "What I treat",
+    links: [
+      { label: "Anxiety", href: paths.anxiety },
+      { label: "Depression", href: paths.depression },
+      { label: "ADHD", href: paths.adhd },
+      { label: "Autism support", href: paths.autism },
+      { label: "Trauma & PTSD", href: paths.trauma },
+      { label: "Personality disorders", href: paths.personality },
+    ],
+  },
+  {
+    title: "Who I help",
+    links: [
+      { label: "Children", href: paths.children },
+      { label: "Teens", href: paths.teens },
+      { label: "Adults", href: paths.adults },
+      { label: "Parents", href: paths.parents },
+      { label: "Companies", href: paths.corporate },
+      { label: "Schools & NGOs", href: paths.schools },
+      { label: "Clinical supervision", href: paths.supervision },
+    ],
+  },
+  {
+    title: "Practice",
+    links: [
+      { label: "About Angela", href: paths.about },
+      { label: "How therapy works", href: "/#process" },
+      { label: "Choosing a psychologist", href: paths.chooseGuide },
+      { label: "FAQ", href: "/#faq" },
+      { label: "Book a session", href: "/#book" },
+    ],
+  },
+];
 
 export const stats = [
   { value: "8+ yrs", label: "Clinical practice" },
@@ -102,6 +206,31 @@ export const credentials = [
   { school: "Beck Institute", detail: "Advanced CBT for ADHD & Case Conceptualization" },
 ];
 
+/* The itemised record behind the summary above, from Angela's professional
+   profile. Degrees are kept apart from short courses because only degrees make
+   her an alumna: structured data must not imply she graduated from Oxford. */
+export const education = [
+  { award: "MSc Clinical Psychology", school: "Kingston University, London", year: 2018 },
+  { award: "BA Psychology", school: "American University of Beirut", year: 2017 },
+  { award: "Post-Education Diploma in Special Education", school: "American University of Beirut", year: 2017 },
+];
+
+export const clinicalTrainings = [
+  { award: "CBT Supervision Training (Becoming a Supervisor)", school: "Oxford University" },
+  { award: "CBT for Anxiety Disorders", school: "Oxford University" },
+  { award: "CBT for Depression", school: "Oxford University" },
+  { award: "Advanced CBT Research and Clinical Applications for ADHD", school: "Beck Institute" },
+  { award: "CBT Clinical Skills and Case Conceptualization", school: "Beck Institute" },
+  { award: "Advanced Cognitive Behavioral Therapy Workshops", school: "Beck Institute" },
+];
+
+/* Lebanon's emergency and support lines. 1564 per the Ministry of Public Health. */
+export const crisis = {
+  lifeline: "1564",
+  lifelineUrl: "https://moph.gov.lb/en/view/75556/1564-the-lifeline",
+  emergencyNumbers: "112 or 140",
+};
+
 /* The cards render as one-liners (icon + title only). `body` and `tag` are
    kept here as reference copy but are not currently displayed. */
 export type AudienceIconName = "children" | "teens" | "adults" | "parents" | "work" | "orgs";
@@ -109,6 +238,7 @@ export type AudienceIconName = "children" | "teens" | "adults" | "parents" | "wo
 export type Audience = {
   icon: AudienceIconName;
   title: string;
+  href: string;
   tint: string;
   accent: string;
   body: string;
@@ -119,6 +249,7 @@ export const audiences: Audience[] = [
   {
     icon: "children",
     title: "Children",
+    href: paths.children,
     tint: "var(--color-tint-adults)",
     accent: "var(--color-sage)",
     body: "Play-informed, parent-supported care that helps little ones feel understood and build early coping skills.",
@@ -127,6 +258,7 @@ export const audiences: Audience[] = [
   {
     icon: "teens",
     title: "Teens & adolescents",
+    href: paths.teens,
     tint: "var(--color-tint-adults)",
     accent: "var(--color-sage)",
     body: "A confidential space for identity, self-esteem, emotional regulation and the weight of academic stress.",
@@ -135,6 +267,7 @@ export const audiences: Audience[] = [
   {
     icon: "adults",
     title: "Adults",
+    href: paths.adults,
     tint: "var(--color-tint-adults)",
     accent: "var(--color-sage)",
     body: "Structured CBT & DBT for anxiety, mood, trauma and the patterns you're ready to gently rewrite.",
@@ -143,6 +276,7 @@ export const audiences: Audience[] = [
   {
     icon: "parents",
     title: "Parents",
+    href: paths.parents,
     tint: "var(--color-tint-adults)",
     accent: "var(--color-sage)",
     body: "Psychoeducation and parenting-skills coaching to strengthen the relationship at home.",
@@ -151,6 +285,7 @@ export const audiences: Audience[] = [
   {
     icon: "work",
     title: "Corporate & businesses",
+    href: paths.corporate,
     tint: "var(--color-tint-adults)",
     accent: "var(--color-sage)",
     body: "Workplace wellbeing sessions, stress and burnout workshops, and psychoeducation for managers and teams.",
@@ -159,6 +294,7 @@ export const audiences: Audience[] = [
   {
     icon: "orgs",
     title: "NGOs & training",
+    href: paths.schools,
     tint: "var(--color-tint-adults)",
     accent: "var(--color-sage)",
     body: "Accredited CBT-informed training, workshops and clinical supervision for NGOs, schools and practitioners.",
@@ -238,19 +374,19 @@ export const processTracks: ProcessTrack[] = [
   },
 ];
 
-export const focusAreas = [
-  "Anxiety disorders",
-  "Depression & mood",
-  "ADHD",
-  "Autism spectrum",
-  "Emotional dysregulation",
-  "Trauma-related difficulties",
-  "Personality disorders",
-  "Low self-esteem",
-  "Identity development",
-  "Academic stress",
-  "Interpersonal challenges",
-  "Behavioural difficulties",
+export const focusAreas: { label: string; href: string }[] = [
+  { label: "Anxiety disorders", href: paths.anxiety },
+  { label: "Depression & mood", href: paths.depression },
+  { label: "ADHD", href: paths.adhd },
+  { label: "Autism spectrum", href: paths.autism },
+  { label: "Emotional dysregulation", href: paths.dbt },
+  { label: "Trauma-related difficulties", href: paths.trauma },
+  { label: "Personality disorders", href: paths.personality },
+  { label: "Low self-esteem", href: paths.teens },
+  { label: "Identity development", href: paths.teens },
+  { label: "Academic stress", href: paths.teens },
+  { label: "Interpersonal challenges", href: paths.adults },
+  { label: "Behavioural difficulties", href: paths.children },
 ];
 
 /* ------------------------------------------------------------------
@@ -295,14 +431,17 @@ export const trainingCertifications = [
 export const trainingOffers = [
   {
     title: "Schools & NGOs",
+    href: paths.schools,
     body: "CBT-informed workshops for teachers, counsellors and frontline staff — child and adolescent mental health, anxiety, behaviour and safeguarding conversations.",
   },
   {
     title: "Corporate & teams",
+    href: paths.corporate,
     body: "Practical sessions on stress, burnout, emotional regulation and supporting a struggling colleague, sized to your team and schedule.",
   },
   {
     title: "Practitioners",
+    href: paths.supervision,
     body: "Clinical supervision and CBT skills training for psychologists and therapists, grounded in accredited supervisor-level qualification.",
   },
 ];
@@ -315,7 +454,19 @@ export const trainingOffers = [
 export const faqs = [
   {
     q: "Where is Angela Barhouch's practice located?",
-    a: "The practice is at FortyFour Tower in Dekwaneh, in the Matn district just north of Beirut, Lebanon. Sessions are available in person there, or online by secure video anywhere in Lebanon and abroad.",
+    a: "The practice is at FortyFour Tower in Dekwaneh, next to Sin El Fil in the Matn district, just north of Beirut, Lebanon. Sessions are available in person there, or online by secure video anywhere in Lebanon and abroad.",
+  },
+  {
+    q: "Is Angela Barhouch a licensed psychologist?",
+    a: "Yes. Angela Barhouch holds a Lebanese Ministry of Public Health licence to practise as a clinical psychologist, number 2021/3/20888, and appears on the Ministry's published list of licensed psychologists. She is also listed in the directory of the Order of Psychologists in Lebanon.",
+  },
+  {
+    q: "Is Angela a psychologist or a psychiatrist? Can she prescribe medication?",
+    a: "Angela is a clinical psychologist, not a psychiatrist. She provides psychological assessment and psychotherapy and does not prescribe medication. In Lebanon, prescribing is reserved for licensed physicians, including psychiatrists, so any medication would be managed by a physician.",
+  },
+  {
+    q: "How much does a session cost?",
+    a: "Angela confirms the current session fee directly on WhatsApp before you book, so you know the cost before you commit to a session.",
   },
   {
     q: "Do you offer a free consultation or intro call?",
@@ -360,6 +511,10 @@ export const faqs = [
   {
     q: "Do you provide training for organisations?",
     a: "Yes. Angela delivers CBT-informed workshops for schools and NGOs, wellbeing and burnout sessions for corporate teams, and clinical supervision and CBT skills training for psychologists and therapists. Training enquiries start on the same WhatsApp chat as therapy bookings.",
+  },
+  {
+    q: "What should I do in a mental health emergency?",
+    a: "Do not wait for a WhatsApp reply. If you or someone else is in immediate danger in Lebanon, call 112 or 140. For confidential emotional support, call 1564, the national psychological support and suicide-prevention lifeline run by the Ministry of Public Health with Embrace, available 24/7.",
   },
 ];
 

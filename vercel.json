@@ -1,5 +1,6 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+  "trailingSlash": false,
+  "rewrites": [{ "source": "/:slug", "destination": "/:slug/index.html" }],
   "headers": [
     {
       "source": "/",

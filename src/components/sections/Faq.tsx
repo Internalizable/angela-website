@@ -9,7 +9,7 @@ export default function Faq() {
   return (
     <Section id="faq" className="bg-cream">
       <SectionHead
-        eyebrow="Questions"
+        eyebrow="Questions about therapy with Angela"
         title={
           <>
             The things people ask <span className="italic font-medium text-sage">before booking</span>.

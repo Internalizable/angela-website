@@ -26,11 +26,21 @@ type HeadProps = {
   tone?: "default" | "onDark";
 };
 
+/* The display line is a shared style so it looks the same whether it's the
+   page's heading or not. */
+export const displayTitle =
+  "font-display font-semibold leading-[1.05] tracking-[-0.015em] text-balance text-forest";
+
+/* The eyebrow is the real heading: it says what the section is about, which is
+   what crawlers and assistants read a heading for. The large line is the voice
+   of the page, and stays a paragraph. */
 export function SectionHead({ eyebrow, title, intro, className = "", tone = "default" }: HeadProps) {
   return (
     <Reveal as="header" className={`mb-[clamp(36px,5vw,60px)] max-w-[640px] ${className}`}>
-      <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="mt-2 text-[clamp(2rem,5vw,3.4rem)] font-semibold">{title}</h2>
+      <h2>
+        <Eyebrow>{eyebrow}</Eyebrow>
+      </h2>
+      <p className={`mt-2 text-[clamp(2rem,5vw,3.4rem)] ${displayTitle}`}>{title}</p>
       {intro && (
         <p className={`mt-[1.1rem] text-[1.08rem] ${tone === "onDark" ? "text-on-dark-soft" : "text-ink-soft"}`}>
           {intro}

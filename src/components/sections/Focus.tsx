@@ -9,7 +9,7 @@ export default function Focus() {
   return (
     <Section id="focus" className="bg-cream">
       <SectionHead
-        eyebrow="What we work on"
+        eyebrow="Conditions and concerns I treat"
         title={
           <>
             Bring what's heavy. <span className="italic font-medium text-sage">We'll make sense of it together.</span>
@@ -22,12 +22,13 @@ export default function Focus() {
         {/* focus chips */}
         <Reveal className="flex flex-wrap gap-2.5">
           {focusAreas.map((area) => (
-            <span
-              key={area}
-              className="cursor-default rounded-full border border-forest/10 bg-card px-4 py-2.5 text-[0.95rem] font-semibold text-forest shadow-soft transition-[transform,background-color,color] duration-300 ease-spring hover:-translate-y-1 hover:-rotate-[1.5deg] hover:bg-sage hover:text-cream"
+            <a
+              key={area.label}
+              href={area.href}
+              className="rounded-full border border-forest/10 bg-card px-4 py-2.5 text-[0.95rem] font-semibold text-forest shadow-soft transition-[transform,background-color,color] duration-300 ease-spring hover:-translate-y-1 hover:-rotate-[1.5deg] hover:bg-sage hover:text-cream"
             >
-              {area}
-            </span>
+              {area.label}
+            </a>
           ))}
         </Reveal>
 

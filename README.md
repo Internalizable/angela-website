@@ -22,14 +22,16 @@ bun run lint
 
 ## Prerendering
 
-`bun run build` runs three stages: the normal client build, a second SSR build
-of `src/entry-server.tsx`, and `scripts/prerender.mjs`, which renders the app to
-HTML and injects it into `dist/index.html`. `main.tsx` hydrates that markup in
-production and falls back to `createRoot` in dev, where the shell is empty.
+`bun run build` runs four stages: the client build, a second SSR build of
+`src/entry-server.tsx`, `scripts/prerender.mjs`, which writes one HTML file per
+page into `dist/`, and `scripts/check-seo.mjs`, which fails the build on missing
+metadata, broken internal links, invalid JSON-LD or a page without exactly one
+H1. `main.tsx` hydrates the markup in production and falls back to `createRoot`
+in dev, where the shell is empty.
 
 This exists because most AI crawlers — and any search bot that skips the render
 queue — don't execute JavaScript, and would otherwise see an empty `#root`.
-Two consequences worth remembering when editing:
+Things worth remembering when editing:
 
 - **Don't hide content behind state.** The scroll-reveal rule is scoped to
   `.js .reveal` so the prerendered page isn't invisible without scripting, and
@@ -37,17 +39,38 @@ Two consequences worth remembering when editing:
 - **Don't import images in components.** The SSR build hashes assets
   separately, so component images live in `public/` and are referenced by a
   stable path.
+- **`vite preview` isn't a faithful test.** It serves the homepage for
+  extensionless URLs like `/about`, which shows up as a false hydration error.
+  Production routing lives in `vercel.json`. Check a deployment with
+  `SITE_URL=<deployment url> bun run post-deploy --check`.
 
 ## SEO and AI discoverability
 
-- `src/components/Seo.tsx` emits JSON-LD (`Psychologist`/`LocalBusiness`,
-  `Person`, `WebSite`, `FAQPage`) built from `site.ts`, so structured data can
-  never drift from the visible copy.
-- `public/llms.txt` is a plain-language brief for AI assistants.
-- `public/robots.txt` explicitly allows AI crawlers; `public/sitemap.xml`
-  lists the single page.
-- FAQ answers in `site.ts` are written to be quotable standalone — assistants
-  lift them without surrounding context.
+Assistants split one question into several searches and cite the page that
+answers each part, so every service, condition and audience has its own URL.
+
+- **Adding or changing a page:** landing pages are entries in
+  `src/content/topics.ts`, rendered by `src/pages/TopicPage.tsx`. Slugs live in
+  `paths` in `site.ts`. Read the rules at the top of `topics.ts` first: this is
+  health content under Angela's name, so nothing about her practice may be added
+  without her confirmation, and claims about conditions need a source.
+- **Clinical review:** set `site.clinicalReviewDate` once Angela has reviewed the
+  pages. Until then the site makes no "clinically reviewed" claim anywhere.
+- **Freshness:** update `site.contentUpdated` when copy really changes. It drives
+  sitemap `lastmod`, `dateModified` and the visible "last updated" line.
+- **Structured data:** `src/seo/schema.ts` builds JSON-LD from `site.ts` and the
+  content files, and it's written into each page's head at build time. Use only
+  real schema.org types and properties; `Psychologist` isn't one.
+- **Generated files:** `sitemap.xml` and `llms.txt` are built from the page list
+  by `src/seo/pages.ts`. Don't add them to `public/`.
+- **Arabic:** `/ar` is one complete right-to-left page, with copy in
+  `src/content/arabic.ts` and its own fonts. Letter-spacing is forced to zero
+  there because it breaks Arabic's joined letters.
+- **After every production deploy:** run `bun run post-deploy`. It checks that
+  every page answers 200 with its own canonical and that unknown URLs answer 404,
+  then notifies IndexNow, which feeds Bing.
+- `public/robots.txt` explicitly allows AI crawlers. Blocking `OAI-SearchBot`
+  would remove the site from ChatGPT search answers.
 
 ## Configuring the practice details
 
@@ -57,6 +80,7 @@ All copy and settings a non-developer might change live in **`src/site.ts`**:
   training-enquiry button reads from this single value. There is no online
   scheduler and no free consultation: booking is a direct conversation.
 - `phone`, `email`, `location`, `modes` — contact details
+- `licence` — Ministry of Public Health number and Order of Psychologists links
 - audiences, therapy process tracks, focus areas, credentials, values
 - `trainingCertifications` — the CBT trainings and certifications Angela has
   completed. The awarding body is intentionally not named on the site
@@ -83,15 +107,21 @@ read as a couch — is recreated as a themeable SVG in
 
 ```
 src/
+  pages/        HomePage, AboutPage, TopicPage, ArabicPage, NotFoundPage
+  content/      topics (landing pages), arabic (/ar copy)
+  seo/          schema (JSON-LD), pages (per-page head, sitemap, llms.txt)
   components/
     brand/      LogoMark, Wordmark
+    layout/     SiteLayout
     three/      CouchScene (Three.js hero)
-    ui/         Button, Section, Eyebrow, Reveal, Icon (primitives)
-    sections/   Nav, Hero, Marquee, About, Audiences, Process, Focus, Training, Booking, Footer
+    ui/         Button, Section, Eyebrow, Reveal, Icon, BookingBand, CrisisNote
+    sections/   Nav, Hero, Marquee, AtAGlance, About, Audiences, Process, Focus, Training, Faq, Booking, Footer
   hooks/        useScrollHeader
   lib/          whatsapp
-  site.ts       all content + configuration
+  routes.ts     path to page chunk, loaded before hydration
+  site.ts       facts, paths and homepage content
   index.css     Tailwind theme + base + motion
+scripts/        prerender, check-seo (build), post-deploy (after deploying)
 ```
 
 Accessibility: keyboard focus rings, a skip link, reduced-motion support

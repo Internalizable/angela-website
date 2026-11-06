@@ -3,26 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Angela Barhouch is a licensed clinical psychologist and psychotherapist in Dekwaneh, Beirut, Lebanon, with specialized CBT and DBT training. Evidence-based therapy in Arabic and English for children, teenagers, adults and parents — in person or online — plus training for schools, NGOs and companies. Book on WhatsApp."
-    />
-    <meta name="theme-color" content="#2E4636" />
-    <link rel="canonical" href="__SITE_URL__/" />
 
-    <!-- Google confirms these cap what may be used as direct input for AI
-         Overviews and AI Mode. Defaults are restrictive; -1/large opts the
-         page fully into AI answers and rich image previews. -->
-    <meta
-      name="robots"
-      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
-    />
-    <meta
-      name="googlebot"
-      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
-    />
-    <meta name="geo.region" content="LB-BA" />
-    <meta name="geo.placename" content="Beirut, Lebanon" />
+    <!-- Per-page tags. scripts/prerender.mjs replaces this whole block for every
+         page using src/seo/pages.ts; the values here only show in dev.
+         The robots values matter: Google says they cap what may be used as input
+         for AI Overviews and AI Mode, and -1/large opts fully in. -->
+    <!--page-head-->
+    <title>Angela Barhouch — Clinical Psychologist &amp; Psychotherapist in Beirut, Lebanon | CBT &amp; DBT</title>
+    <!--/page-head-->
+
+    <meta name="theme-color" content="#2E4636" />
+    <!-- Dekwaneh is in Mount Lebanon Governorate (LB-JL), not Beirut (LB-BA). -->
+    <meta name="geo.region" content="LB-JL" />
+    <meta name="geo.placename" content="Dekwaneh, Greater Beirut, Lebanon" />
+    <meta name="geo.position" content="33.8805;35.5422" />
 
     <!-- Marks that scripts run, so scroll-reveal only hides content for
          visitors who will actually see it revealed. Must stay before the CSS. -->
@@ -40,13 +34,6 @@
          unreliable with WebP. -->
     <meta property="og:site_name" content="Angela Barhouch" />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:url" content="__SITE_URL__/" />
-    <meta property="og:title" content="Angela Barhouch — Psychotherapist, CBT &amp; DBT" />
-    <meta
-      property="og:description"
-      content="Licensed psychologist and psychotherapist. CBT &amp; DBT therapy for children, teens, adults and parents — in Beirut or online. Also training and workshops for schools, organizations, NGOs and professional teams. Book on WhatsApp."
-    />
     <meta property="og:image" content="__SITE_URL__/og-cover.jpg" />
     <meta property="og:image:secure_url" content="__SITE_URL__/og-cover.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
@@ -58,11 +45,6 @@
     />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Angela Barhouch — Psychotherapist, CBT &amp; DBT" />
-    <meta
-      name="twitter:description"
-      content="Licensed psychologist and psychotherapist. CBT &amp; DBT therapy for children, teens, adults and parents — in Beirut or online. Also training for schools, NGOs and professional teams."
-    />
     <meta name="twitter:image" content="__SITE_URL__/og-cover.jpg" />
 
     <!-- Fonts: Fraunces (warm display serif) + Mulish (friendly body) -->
@@ -72,8 +54,6 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
       rel="stylesheet"
     />
-
-    <title>Angela Barhouch — Clinical Psychologist &amp; Psychotherapist in Beirut, Lebanon | CBT &amp; DBT</title>
   </head>
   <body>
     <div id="root"></div>

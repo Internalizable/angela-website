@@ -2,7 +2,7 @@ import Wordmark from "../brand/Wordmark";
 import Button from "../ui/Button";
 import { WhatsApp } from "../ui/Icon";
 import { useScrollHeader } from "../../hooks/useScrollHeader";
-import { nav, site } from "../../site";
+import { nav, paths, site } from "../../site";
 import { whatsappLink } from "../../lib/whatsapp";
 
 /* Contextual header: solidifies on scroll, hides on the way down,
@@ -22,7 +22,7 @@ export default function Nav() {
       ].join(" ")}
     >
       <nav className="flex w-full max-w-[1200px] items-center justify-between gap-4">
-        <Wordmark />
+        <Wordmark className="lg:shrink-0 lg:whitespace-nowrap" />
 
         <ul className="hidden items-center gap-[clamp(1rem,2.4vw,2.2rem)] lg:flex">
           {nav.map((item) => (
@@ -39,12 +39,24 @@ export default function Nav() {
         </ul>
 
         <div className="flex items-center gap-3">
-          <a href={site.phoneHref} className="hidden text-[0.95rem] font-semibold text-forest tabular-nums lg:inline">
+          {/* Phones have no room for this beside the Book button: the hero and
+              footer carry the link there instead. */}
+          <a href={paths.arabic} lang="ar" hrefLang="ar" className="hidden text-[0.95rem] font-semibold text-forest sm:inline">
+            العربية
+          </a>
+          {/* The header has no spare width, so the phone (also in the booking
+              section and footer) only shows once everything fits on one line. */}
+          <a
+            href={site.phoneHref}
+            className="hidden whitespace-nowrap text-[0.95rem] font-semibold text-forest tabular-nums min-[1360px]:inline"
+          >
             {site.phone}
           </a>
           <Button as="a" {...whatsappLink} aria-label="Book a session with Angela on WhatsApp">
             <WhatsApp size={18} />
-            Book<span className="hidden sm:inline">&nbsp;a session</span>
+            <span>
+              Book<span className="hidden sm:inline lg:hidden xl:inline">&nbsp;a session</span>
+            </span>
           </Button>
         </div>
       </nav>

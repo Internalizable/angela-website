@@ -1,16 +1,16 @@
 import { lazy, Suspense } from "react";
 import Button from "../ui/Button";
 import Eyebrow from "../ui/Eyebrow";
+import { displayTitle } from "../ui/Section";
 import { ArrowRight, Heart, Spark, WhatsApp } from "../ui/Icon";
-import { site, stats } from "../../site";
+import { paths, site, stats } from "../../site";
 import { whatsappLink } from "../../lib/whatsapp";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 // 3D scene is heavy + browser-only — load it after the rest of the hero paints.
 /* The chunk hash changes every deploy, so a tab left open across a deploy asks
-   for a file that no longer exists — and the SPA rewrite answers with
-   index.html, which fails MIME checking. The scene is decorative, so swallow
-   that and render nothing rather than letting it tear down the whole app. */
+   for a file that no longer exists. The scene is decorative, so swallow that
+   and render nothing rather than letting it tear down the whole app. */
 const CouchScene = lazy(() =>
   import("../three/CouchScene").catch(() => ({ default: () => <></> })),
 );
@@ -72,11 +72,16 @@ export default function Hero() {
 
       <div className="relative z-[2] mx-auto grid w-full max-w-[1200px] grid-cols-1 items-center gap-8 px-[clamp(20px,5vw,64px)] md:grid-cols-[1.08fr_0.92fr]">
         <div>
-          <span data-anim className="block opacity-0 animate-fade-up [animation-delay:0.15s]">
-            <Eyebrow>Psychotherapist · CBT · DBT · {site.location}</Eyebrow>
-          </span>
+          {/* The small line is the H1 because it says who and where, which is
+              what a search or an assistant needs from the page's main heading.
+              The tagline keeps its size and remains the visual headline. */}
+          <h1 data-anim className="block opacity-0 animate-fade-up [animation-delay:0.15s]">
+            <Eyebrow>
+              {site.name} · Clinical Psychologist &amp; Psychotherapist in {site.location}
+            </Eyebrow>
+          </h1>
 
-          <h1 className="mt-6 text-[clamp(2.6rem,6.2vw,5rem)] font-semibold leading-[0.98]">
+          <p className={`mt-6 text-[clamp(2.6rem,6.2vw,5rem)] ${displayTitle} !leading-[0.98]`}>
             <span className="reveal-line">
               <span>A calmer mind,</span>
             </span>
@@ -86,15 +91,16 @@ export default function Hero() {
             <span className="reveal-line">
               <span className="[animation-delay:0.18s]">at a time.</span>
             </span>
-          </h1>
+          </p>
 
           <p
             data-anim
             className="mt-6 max-w-[44ch] text-[1.05rem] text-ink-soft opacity-0 animate-fade-up [animation-delay:0.42s]"
           >
-            I am a licensed psychologist and psychotherapist. Practical, evidence-based therapy for children, teens,
-            adults, and parents—available in person in Beirut, Lebanon, or online wherever you are. I also provide
-            training and workshops for schools, organizations, NGOs, and professional teams.
+            I am Angela Barhouch, a licensed psychologist and psychotherapist. Practical, evidence-based therapy in
+            Arabic or English for children, teens, adults, and parents—available in person in Beirut, Lebanon, or online
+            wherever you are. I also provide training and workshops for schools, organizations, NGOs, and professional
+            teams.
           </p>
 
           <div data-anim className="mt-8 flex flex-wrap gap-3.5 opacity-0 animate-fade-up [animation-delay:0.56s]">
@@ -106,6 +112,14 @@ export default function Hero() {
               Meet Angela
               <ArrowRight size={18} className="transition-transform duration-300 ease-spring group-hover:translate-x-1" />
             </Button>
+            <a
+              href={paths.arabic}
+              lang="ar"
+              hrefLang="ar"
+              className="w-full font-semibold text-forest underline underline-offset-4 sm:hidden"
+            >
+              هذه الصفحة بالعربية
+            </a>
           </div>
 
           <dl data-anim className="mt-10 flex flex-wrap gap-x-8 gap-y-5 opacity-0 animate-fade-up [animation-delay:0.7s]">

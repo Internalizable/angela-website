@@ -1,8 +1,8 @@
-import { Section } from "../ui/Section";
+import { displayTitle, Section } from "../ui/Section";
 import Eyebrow from "../ui/Eyebrow";
 import Reveal from "../ui/Reveal";
-import { Pin, Screen, Leaf } from "../ui/Icon";
-import { credentials, site } from "../../site";
+import { ArrowRight, Pin, Screen, Leaf } from "../ui/Icon";
+import { credentials, paths, site } from "../../site";
 
 /* Served from public/ rather than imported: the prerender pass runs a separate
    SSR bundle, and hashed asset imports would resolve to a different filename
@@ -46,10 +46,12 @@ export default function About() {
         {/* bio */}
         <div>
           <Reveal>
-            <Eyebrow>About Angela</Eyebrow>
-            <h2 className="mt-2 text-[clamp(1.9rem,4.4vw,3rem)] font-semibold">
-              Therapy that's <span className="italic font-medium text-sage">structured</span>, collaborative and genuinely kind.
+            <h2>
+              <Eyebrow>About Angela Barhouch</Eyebrow>
             </h2>
+            <p className={`mt-2 text-[clamp(1.9rem,4.4vw,3rem)] ${displayTitle}`}>
+              Therapy that's <span className="italic font-medium text-sage">structured</span>, collaborative and genuinely kind.
+            </p>
           </Reveal>
           <Reveal delay={80} className="mt-5 space-y-4 text-ink-soft">
             <p className="text-[clamp(1.05rem,1.6vw,1.25rem)]">
@@ -83,15 +85,27 @@ export default function About() {
           </Reveal>
 
           <Reveal delay={160} className="mt-8 flex flex-wrap gap-2.5">
+            {/* The qualification is written out rather than left in a tooltip,
+                so it's in the text crawlers read and visible on touch screens. */}
             {credentials.map((c) => (
               <span
                 key={c.school}
-                className="inline-flex items-center gap-1.5 rounded-full border border-forest/10 bg-paper px-3.5 py-2 text-[0.86rem] font-semibold text-forest"
-                title={c.detail}
+                className="inline-flex items-baseline gap-1.5 rounded-[18px] border border-forest/10 bg-paper px-3.5 py-2 text-[0.86rem] font-semibold text-forest"
               >
-                <b className="text-sage-ink">✦</b> {c.school}
+                <b className="text-sage-ink">✦</b>
+                <span>
+                  {c.school}
+                  <span className="block font-medium text-ink-soft">{c.detail}</span>
+                </span>
               </span>
             ))}
+          </Reveal>
+
+          <Reveal delay={190} className="mt-6">
+            <a href={paths.about} className="group inline-flex items-center gap-2 font-bold text-forest underline underline-offset-4">
+              Full credentials and licence
+              <ArrowRight size={18} className="transition-transform duration-300 ease-spring group-hover:translate-x-1" />
+            </a>
           </Reveal>
         </div>
       </div>

@@ -53,10 +53,14 @@ export default function Training() {
         <Reveal delay={120}>
           <div className="flex h-full flex-col gap-4">
             {trainingOffers.map((o) => (
-              <div key={o.title} className="rounded-[26px] bg-card p-6 shadow-soft">
+              <a
+                key={o.title}
+                href={o.href}
+                className="block rounded-[26px] bg-card p-6 shadow-soft transition-[transform,box-shadow] duration-500 ease-spring hover:-translate-y-1 hover:shadow-float"
+              >
                 <h3 className="text-[1.18rem] font-semibold">{o.title}</h3>
                 <p className="mt-2 text-[0.95rem] text-ink-soft">{o.body}</p>
-              </div>
+              </a>
             ))}
 
             <div className="mt-auto rounded-[26px] p-6 shadow-soft [background:linear-gradient(150deg,var(--color-mint-soft),var(--color-tint-orgs))]">

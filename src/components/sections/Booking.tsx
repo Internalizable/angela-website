@@ -1,4 +1,4 @@
-import { Section } from "../ui/Section";
+import { displayTitle, Section } from "../ui/Section";
 import Eyebrow from "../ui/Eyebrow";
 import Reveal from "../ui/Reveal";
 import Button from "../ui/Button";
@@ -20,10 +20,12 @@ export default function Booking() {
     <Section id="book" className="[background:linear-gradient(180deg,var(--color-paper)_0%,var(--color-paper-2)_100%)]">
       <div className="grid grid-cols-1 items-stretch gap-[clamp(2rem,4vw,3.5rem)] md:grid-cols-[0.95fr_1.05fr]">
         <Reveal className="flex flex-col">
-          <Eyebrow>Book a session</Eyebrow>
-          <h2 className="mt-2 text-[clamp(2rem,4.6vw,3.2rem)] font-semibold">
-            One message is all it <span className="italic font-medium text-sage">takes to start</span>.
+          <h2>
+            <Eyebrow>Book a session with Angela</Eyebrow>
           </h2>
+          <p className={`mt-2 text-[clamp(2rem,4.6vw,3.2rem)] ${displayTitle}`}>
+            One message is all it <span className="italic font-medium text-sage">takes to start</span>.
+          </p>
           <p className="mt-4 max-w-[42ch] text-[1.08rem] text-ink-soft">
             Booking happens on WhatsApp, directly with Angela — no forms, no waiting room. We begin with a full first
             session, so the work starts from the very first hour.
