@@ -133,7 +133,7 @@ export default function AboutPage() {
 
           <section>
             <h2 className={h2Class}>Therapeutic approach</h2>
-            <blockquote className="mt-4 border-l-4 border-sage pl-5 font-display text-[clamp(1.15rem,2vw,1.4rem)] italic text-forest">
+            <blockquote className="mt-4 rounded-[20px] bg-paper p-6 font-display text-[clamp(1.15rem,2vw,1.4rem)] italic text-forest">
               "My therapeutic approach is collaborative, structured, and compassionate, with a strong focus on helping
               clients develop insight, effective coping skills, and long-term psychological resilience."
             </blockquote>
